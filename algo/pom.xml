@@ -17,19 +17,4 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     
-    <dependencies>
-        <dependency>
-            <groupId>actin</groupId>
-            <artifactId>datamodel</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>actin</groupId>
-            <artifactId>datamodel</artifactId>
-            <scope>test</scope>
-            <type>test-jar</type>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
-
 </project>
