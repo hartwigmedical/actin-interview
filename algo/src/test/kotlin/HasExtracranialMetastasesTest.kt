@@ -6,18 +6,43 @@ import com.hartwig.actin.clinical.datamodel.Gender
 import com.hartwig.actin.clinical.datamodel.PatientDetails
 import com.hartwig.actin.clinical.datamodel.TumorDetails
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.time.LocalDateTime
 
 class HasExtracranialMetastasesTest {
     
     @Test
-    fun shouldFailIfPatientHasNoLesions() {
+    fun `Should be undetermined if patient lesion details are not provided`() {
         val record = createMinimalTestClinicalRecord()
         val evaluation = FUNCTION.evaluate(record)
+        assertEquals(EvaluationResult.UNDETERMINED, evaluation.result)
+    }
+
+    @Test
+    fun `Should fail if patient has no lesions`() {
+        val record = createMinimalTestClinicalRecord().copy(
+            tumor = TumorDetails(
+                hasBoneLesions = false,
+                hasBrainLesions = false,
+                hasCnsLesions = false,
+                hasLiverLesions = false,
+                hasLungLesions = false,
+                hasLymphNodeLesions = false
+            )
+        )
+        val evaluation = FUNCTION.evaluate(record)
         assertEquals(EvaluationResult.FAIL, evaluation.result)
-        assertTrue(evaluation.failGeneralMessages.isNotEmpty())
+    }
+    
+    @Test
+    fun `Should pass if patient has extracranial lesions`() {
+        val record = createMinimalTestClinicalRecord().copy(
+            tumor = TumorDetails(
+                hasBoneLesions = true
+            )
+        )
+        val evaluation = FUNCTION.evaluate(record)
+        assertEquals(EvaluationResult.PASS, evaluation.result)
     }
     
     companion object {
