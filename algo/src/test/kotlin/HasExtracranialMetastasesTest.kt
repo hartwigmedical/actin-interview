@@ -24,10 +24,12 @@ class HasExtracranialMetastasesTest {
             tumor = TumorDetails(
                 hasBoneLesions = false,
                 hasBrainLesions = false,
+                hasActiveCnsLesions = false,
                 hasCnsLesions = false,
                 hasLiverLesions = false,
                 hasLungLesions = false,
-                hasLymphNodeLesions = false
+                hasLymphNodeLesions = false,
+                otherLesions = emptyList()
             )
         )
         val evaluation = FUNCTION.evaluate(record)
