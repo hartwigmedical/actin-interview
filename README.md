@@ -4,12 +4,12 @@
 
 Every eligibility criterion evaluates to one of the following options:
 
-| Evaluation      | Description                                                                                                                              |
-|-----------------|------------------------------------------------------------------------------------------------------------------------------------------|
-| PASS            | The patient complies with the inclusion or exclusion criterion.                                                                          |
-| WARN            | The patient may or may not comply with inclusion or exclusion criterion. A manual evaluation is required.                                |
-| FAIL            | The patient does not comply with the inclusion or exclusion criterion.                                                                   |
-| UNDETERMINED    | The data that is required to evaluate the inclusion or exclusion criterion is unavailable.                                               |
+| Evaluation      | Description                                                                                               |
+|-----------------|-----------------------------------------------------------------------------------------------------------|
+| PASS            | The patient complies with the inclusion or exclusion criterion.                                           |
+| WARN            | The patient may or may not comply with inclusion or exclusion criterion. A manual evaluation is required. |
+| FAIL            | The patient does not comply with the inclusion or exclusion criterion.                                    |
+| UNDETERMINED    | The data that is required to evaluate the inclusion or exclusion criterion is unavailable.                |
 
 #### Evaluation feedback
 
@@ -22,6 +22,6 @@ The following rules are available:
 
 ##### Rules related to tumor and lesion localization
 
-| Rule                                                                    | When does a patient pass evaluation?                                                                                                                                                                                                                                                                                                                                                                        | Note                                                                                                                                                                                                                                                                                                                                             |
-|-------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| HAS_EXTRACRANIAL_METASTASES                                             | Tumor details > has lesions other than (belonging to category) brain                                                                                                                                                                                                                                                                                                                                        |                                                                                                                                                                                                                                                                                                                                                  |
+| Rule                                                                    | When does a patient pass evaluation?                                 | 
+|-------------------------------------------------------------------------|----------------------------------------------------------------------|
+| HAS_EXTRACRANIAL_METASTASES                                             | Tumor details > has lesions other than (belonging to category) brain |                                                                                                                                                                                                                                                                                                                                                  |
