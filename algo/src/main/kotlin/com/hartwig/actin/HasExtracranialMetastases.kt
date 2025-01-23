@@ -6,9 +6,6 @@ import com.hartwig.actin.clinical.datamodel.ClinicalRecord
 class HasExtracranialMetastases : EvaluationFunction {
     
     override fun evaluate(record: ClinicalRecord): Evaluation {
-        return EvaluationFactory.undetermined(
-            "Currently it not determined if there are extracranial metastases",
-            "Undetermined extracranial metastases"
-        )
+        return EvaluationFactory.undetermined("Undetermined if patient has extracranial metastases")
     }
 }
