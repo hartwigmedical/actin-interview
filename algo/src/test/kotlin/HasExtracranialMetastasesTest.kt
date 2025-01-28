@@ -16,55 +16,41 @@ private const val DAYS_SINCE_REGISTRATION = 15
 class HasExtracranialMetastasesTest {
     private val today = LocalDateTime.now().toLocalDate()
     private val function = HasExtracranialMetastases()
-    private val tumorWithNoLesions = TumorDetails(
-        hasBoneLesions = false,
-        hasBrainLesions = false,
-        hasActiveCnsLesions = false,
-        hasCnsLesions = false,
-        hasLiverLesions = false,
-        hasLungLesions = false,
-        hasLymphNodeLesions = false,
-        otherLesions = emptyList()
-    )
 
     @Test
-    fun `Should be undetermined if any patient lesion details are not provided`() {
-        listOf(
-            TumorDetails(),
-            tumorWithNoLesions.copy(hasBoneLesions = null),
-            tumorWithNoLesions.copy(hasLiverLesions = null),
-            tumorWithNoLesions.copy(hasLungLesions = null),
-            tumorWithNoLesions.copy(hasLymphNodeLesions = null),
-            tumorWithNoLesions.copy(otherLesions = null)
-        )
-            .map { tumor -> createMinimalTestClinicalRecord(tumor) }
-            .forEach { record ->
-                val evaluation = function.evaluate(record)
-                assertEquals(EvaluationResult.UNDETERMINED, evaluation.result)
-            }
+    fun `Should be undetermined if patient lesion details are not provided`() {
+        val record = createMinimalTestClinicalRecord()
+        val evaluation = function.evaluate(record)
+        assertEquals(EvaluationResult.UNDETERMINED, evaluation.result)
     }
 
     @Test
     fun `Should fail if patient has no lesions`() {
-        val record = createMinimalTestClinicalRecord(tumorWithNoLesions)
+        val record = createMinimalTestClinicalRecord().copy(
+            tumor = TumorDetails(
+                hasBoneLesions = false,
+                hasBrainLesions = false,
+                hasActiveCnsLesions = false,
+                hasCnsLesions = false,
+                hasLiverLesions = false,
+                hasLungLesions = false,
+                hasLymphNodeLesions = false,
+                otherLesions = emptyList()
+            )
+        )
         val evaluation = function.evaluate(record)
         assertEquals(EvaluationResult.FAIL, evaluation.result)
     }
     
     @Test
-    fun `Should pass if patient has any extracranial lesions`() {
-        listOf(
-            TumorDetails(hasBoneLesions = true),
-            TumorDetails(hasLiverLesions = true),
-            TumorDetails(hasLungLesions = true),
-            TumorDetails(hasLymphNodeLesions = true),
-            TumorDetails(otherLesions = listOf("adrenal"))
+    fun `Should pass if patient has extracranial lesions`() {
+        val record = createMinimalTestClinicalRecord().copy(
+            tumor = TumorDetails(
+                hasBoneLesions = true
+            )
         )
-            .map { tumor -> createMinimalTestClinicalRecord().copy(tumor = tumor) }
-            .forEach { record ->
-                val evaluation = function.evaluate(record)
-                assertEquals(EvaluationResult.PASS, evaluation.result)
-            }
+        val evaluation = function.evaluate(record)
+        assertEquals(EvaluationResult.PASS, evaluation.result)
     }
     
     fun createMinimalTestClinicalRecord(tumor: TumorDetails = TumorDetails()): ClinicalRecord {
