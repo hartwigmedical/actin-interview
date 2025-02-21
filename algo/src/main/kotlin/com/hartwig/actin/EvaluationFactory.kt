@@ -14,4 +14,7 @@ object EvaluationFactory {
         return Evaluation(EvaluationResult.UNDETERMINED, recoverable, setOf(message))
     }
 
+    fun warn(message: String, recoverable: Boolean = false): Evaluation {
+        return Evaluation(EvaluationResult.WARN, recoverable, setOf(message))
+    }
 }
