@@ -1,5 +1,6 @@
 package com.hartwig.actin
 
+import com.hartwig.actin.clinical.datamodel.BodyLocationCategory
 import com.hartwig.actin.clinical.datamodel.ClinicalRecord
 import com.hartwig.actin.clinical.datamodel.ClinicalStatus
 import com.hartwig.actin.clinical.datamodel.Gender
@@ -28,12 +29,8 @@ class HasExtracranialMetastasesTest {
     fun `Should fail if patient has no extracranial lesions`() {
         val record = createMinimalTestClinicalRecord().copy(
             tumor = TumorDetails(
-                hasBoneLesions = false,
+                lesionLocations = emptySet(),
                 hasActiveCnsLesions = false,
-                hasCnsLesions = false,
-                hasLiverLesions = false,
-                hasLungLesions = false,
-                hasLymphNodeLesions = false,
                 otherLesions = emptyList()
             )
         )
@@ -45,7 +42,7 @@ class HasExtracranialMetastasesTest {
     fun `Should fail if patient has only cranial lesions`() {
         val record = createMinimalTestClinicalRecord().copy(
             tumor = TumorDetails(
-                hasBrainLesions = true
+                lesionLocations = setOf(BodyLocationCategory.BRAIN)
             )
         )
         val evaluation = function.evaluate(record)
@@ -67,7 +64,7 @@ class HasExtracranialMetastasesTest {
     fun `Should pass if patient has extracranial lesions`() {
         val record = createMinimalTestClinicalRecord().copy(
             tumor = TumorDetails(
-                hasBoneLesions = true
+                lesionLocations = setOf(BodyLocationCategory.BONE)
             )
         )
         val evaluation = function.evaluate(record)
@@ -78,8 +75,7 @@ class HasExtracranialMetastasesTest {
     fun `Should pass if patient has extracranial lesions and brain lesions`() {
         val record = createMinimalTestClinicalRecord().copy(
             tumor = TumorDetails(
-                hasLiverLesions = true,
-                hasBrainLesions = true
+                lesionLocations = setOf(BodyLocationCategory.BONE, BodyLocationCategory.BRAIN)
             )
         )
         val evaluation = function.evaluate(record)

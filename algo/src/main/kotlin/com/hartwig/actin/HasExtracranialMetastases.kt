@@ -1,5 +1,6 @@
 package com.hartwig.actin
 
+import com.hartwig.actin.clinical.datamodel.BodyLocationCategory
 import com.hartwig.actin.clinical.datamodel.ClinicalRecord
 import com.hartwig.actin.clinical.datamodel.TumorDetails
 
@@ -11,12 +12,8 @@ class HasExtracranialMetastases : EvaluationFunction {
         if (record.tumor == TumorDetails()) {
             return EvaluationFactory.undetermined("HAS_EXTRACRANIAL_METASTASES: Not enough tumor data was given to verify extracranial metastases are present")
         }
-        else if (record.tumor.hasCnsLesions != true
-            && record.tumor.hasActiveCnsLesions != true
-            && record.tumor.hasBoneLesions != true
-            && record.tumor.hasLiverLesions != true
-            && record.tumor.hasLungLesions != true
-            && record.tumor.hasLymphNodeLesions != true) {
+        else if (record.tumor.hasActiveCnsLesions != true
+            && record.tumor.lesionLocations?.let { it.size == 0 || (it.size == 1 && BodyLocationCategory.BRAIN in it) } == true) {
                 if (record.tumor.otherLesions.isNullOrEmpty())
                     return EvaluationFactory.fail("HAS_EXTRACRANIAL_METASTASES: No extracranial metastases are present")
                 else
