@@ -25,11 +25,10 @@ class HasExtracranialMetastasesTest {
     }
 
     @Test
-    fun `Should fail if patient has no lesions`() {
+    fun `Should fail if patient has no extracranial lesions`() {
         val record = createMinimalTestClinicalRecord().copy(
             tumor = TumorDetails(
                 hasBoneLesions = false,
-                hasBrainLesions = false,
                 hasActiveCnsLesions = false,
                 hasCnsLesions = false,
                 hasLiverLesions = false,
@@ -41,7 +40,29 @@ class HasExtracranialMetastasesTest {
         val evaluation = function.evaluate(record)
         assertEquals(EvaluationResult.FAIL, evaluation.result)
     }
-    
+
+    @Test
+    fun `Should fail if patient has only cranial lesions`() {
+        val record = createMinimalTestClinicalRecord().copy(
+            tumor = TumorDetails(
+                hasBrainLesions = true
+            )
+        )
+        val evaluation = function.evaluate(record)
+        assertEquals(EvaluationResult.FAIL, evaluation.result)
+    }
+
+    @Test
+    fun `Should pass if patient has active CNS lesions`() {
+        val record = createMinimalTestClinicalRecord().copy(
+            tumor = TumorDetails(
+                hasActiveCnsLesions = true
+            )
+        )
+        val evaluation = function.evaluate(record)
+        assertEquals(EvaluationResult.PASS, evaluation.result)
+    }
+
     @Test
     fun `Should pass if patient has extracranial lesions`() {
         val record = createMinimalTestClinicalRecord().copy(
@@ -52,7 +73,19 @@ class HasExtracranialMetastasesTest {
         val evaluation = function.evaluate(record)
         assertEquals(EvaluationResult.PASS, evaluation.result)
     }
-    
+
+    @Test
+    fun `Should pass if patient has extracranial lesions and brain lesions`() {
+        val record = createMinimalTestClinicalRecord().copy(
+            tumor = TumorDetails(
+                hasLiverLesions = true,
+                hasBrainLesions = true
+            )
+        )
+        val evaluation = function.evaluate(record)
+        assertEquals(EvaluationResult.PASS, evaluation.result)
+    }
+
     fun createMinimalTestClinicalRecord(tumor: TumorDetails = TumorDetails()): ClinicalRecord {
         return ClinicalRecord(
             patientId = TEST_PATIENT,
