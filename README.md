@@ -22,6 +22,6 @@ The following rules are available:
 
 ##### Rules related to tumor and lesion localization
 
-| Rule                                                                    | When does a patient pass evaluation?                                 | 
-|-------------------------------------------------------------------------|----------------------------------------------------------------------|
-| HAS_EXTRACRANIAL_METASTASES                                             | Tumor details - has lesions other than (belonging to category) brain |                                                                                                                                                                                                                                                                                                                                                  |
+| Rule                                                                    | When does a patient pass evaluation?                     | 
+|-------------------------------------------------------------------------|----------------------------------------------------------|
+| HAS_EXTRACRANIAL_METASTASES                                             | Tumor details - has lesions in location other than brain |                                                                                                                                                                                                                                                                                                                                                  |
