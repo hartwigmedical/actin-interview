@@ -13,7 +13,6 @@ import com.hartwig.actin.datamodel.clinical.LabMeasurement
 import com.hartwig.actin.datamodel.clinical.LabMeasurement.CALCIUM
 import com.hartwig.actin.datamodel.clinical.LabMeasurement.CORRECTED_CALCIUM
 import com.hartwig.actin.datamodel.clinical.LabMeasurement.IONIZED_CALCIUM
-import com.hartwig.actin.datamodel.clinical.LabValue
 import java.time.LocalDate
 
 class HasPotentialSymptomaticHypercalcemia(private val minValidDate: LocalDate) : EvaluationFunction {
