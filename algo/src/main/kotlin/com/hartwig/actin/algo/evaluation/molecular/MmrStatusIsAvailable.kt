@@ -4,7 +4,7 @@ import com.hartwig.actin.algo.evaluation.EvaluationFactory
 import com.hartwig.actin.algo.evaluation.EvaluationFunction
 import com.hartwig.actin.algo.evaluation.IhcTestEvaluation
 import com.hartwig.actin.datamodel.PatientRecord
-import com.hartwig.actin.datamodel.algo.Evaluation
+import com.hartwig.actin.algo.evaluation.Evaluation
 
 class MmrStatusIsAvailable : EvaluationFunction {
 
@@ -15,7 +15,7 @@ class MmrStatusIsAvailable : EvaluationFunction {
         return if (ihcResultAvailable || molecularResultAvailable) {
             EvaluationFactory.pass("MMR status is available")
         } else {
-            EvaluationFactory.recoverableFail("No MMR status available")
+            EvaluationFactory.fail("No MMR status available")
         }
     }
 }

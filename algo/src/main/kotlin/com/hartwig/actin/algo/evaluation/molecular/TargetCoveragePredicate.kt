@@ -1,7 +1,6 @@
 package com.hartwig.actin.algo.evaluation.molecular
 
 import com.hartwig.actin.algo.evaluation.util.Format
-import com.hartwig.actin.datamodel.algo.EvaluationMessage
 import com.hartwig.actin.datamodel.molecular.MolecularTestTarget
 import java.util.function.Predicate
 
@@ -45,6 +44,11 @@ private fun combine(
     stringify,
     messagePrefix
 )
+
+interface EvaluationMessage {
+    fun combineBy(): String
+    fun combine(other: EvaluationMessage): EvaluationMessage
+}
 
 class TargetCoveragePredicate(
     private val targets: Set<MolecularTestTarget>,

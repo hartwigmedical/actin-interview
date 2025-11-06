@@ -1,11 +1,11 @@
 package com.hartwig.actin.algo.evaluation.comorbidity
 
+import com.hartwig.actin.algo.evaluation.Evaluation
 import com.hartwig.actin.algo.evaluation.EvaluationFactory
 import com.hartwig.actin.algo.evaluation.EvaluationFunction
 import com.hartwig.actin.algo.evaluation.util.Format
-import com.hartwig.actin.algo.icd.IcdConstants
+import com.hartwig.actin.datamodel.IcdConstants
 import com.hartwig.actin.datamodel.PatientRecord
-import com.hartwig.actin.datamodel.algo.Evaluation
 import com.hartwig.actin.datamodel.clinical.IcdCode
 import com.hartwig.actin.icd.IcdModel
 
@@ -17,19 +17,14 @@ class HasLeptomeningealDisease(private val icdModel: IcdModel) : EvaluationFunct
         ).fullMatches.isNotEmpty()
 
         val tumorDetails = record.tumor
-        val otherLesions = listOfNotNull(tumorDetails.otherLesions, tumorDetails.otherSuspectedLesions).flatten()
 
         return when {
             hasConfirmedLeptomeningealDisease -> {
                 EvaluationFactory.pass("Has leptomeningeal disease")
             }
 
-            filterPotentiallyMeningealLesions(tumorDetails.hasConfirmedCnsLesions(), otherLesions).isNotEmpty() -> {
-                createWarnEvaluation(suspected = false, otherLesions)
-            }
-
-            filterPotentiallyMeningealLesions(tumorDetails.hasSuspectedCnsLesions, otherLesions).isNotEmpty() -> {
-                createWarnEvaluation(suspected = true, otherLesions)
+            filterPotentiallyMeningealLesions(tumorDetails.hasCnsLesions, tumorDetails.otherLesions.orEmpty()).isNotEmpty() -> {
+                createWarnEvaluation(suspected = false, tumorDetails.otherLesions.orEmpty())
             }
 
             else -> EvaluationFactory.fail("No leptomeningeal disease")

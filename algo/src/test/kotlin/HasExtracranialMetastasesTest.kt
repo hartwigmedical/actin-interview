@@ -1,5 +1,6 @@
 package com.hartwig.actin
 
+import com.hartwig.actin.algo.evaluation.EvaluationResult
 import com.hartwig.actin.clinical.datamodel.ClinicalRecord
 import com.hartwig.actin.clinical.datamodel.ClinicalStatus
 import com.hartwig.actin.clinical.datamodel.Gender

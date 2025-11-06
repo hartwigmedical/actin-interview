@@ -3,7 +3,7 @@ package com.hartwig.actin.algo.evaluation.molecular
 import com.hartwig.actin.algo.evaluation.EvaluationFactory
 import com.hartwig.actin.algo.evaluation.EvaluationFunction
 import com.hartwig.actin.datamodel.PatientRecord
-import com.hartwig.actin.datamodel.algo.Evaluation
+import com.hartwig.actin.algo.evaluation.Evaluation
 import com.hartwig.actin.datamodel.molecular.MolecularHistory
 
 class NsclcDriverGeneStatusesAreAvailable : EvaluationFunction {
@@ -23,14 +23,14 @@ class NsclcDriverGeneStatusesAreAvailable : EvaluationFunction {
             }
 
             invalidOncoPanelOrWGSList.isNotEmpty() -> {
-                EvaluationFactory.recoverableFail(
+                EvaluationFactory.fail(
                     "NSCLC driver gene statuses unknown (sequencing data of insufficient quality)",
                     isMissingMolecularResultForEvaluation = true
                 )
             }
 
             else -> {
-                EvaluationFactory.recoverableFail(
+                EvaluationFactory.fail(
                     "NSCLC driver gene statuses not available (missing: ${missing.joinToString()})",
                     isMissingMolecularResultForEvaluation = true
                 )

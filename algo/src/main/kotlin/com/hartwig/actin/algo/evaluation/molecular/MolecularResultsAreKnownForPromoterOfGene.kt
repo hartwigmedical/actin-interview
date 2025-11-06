@@ -3,8 +3,8 @@ package com.hartwig.actin.algo.evaluation.molecular
 import com.hartwig.actin.algo.evaluation.EvaluationFactory
 import com.hartwig.actin.algo.evaluation.EvaluationFunction
 import com.hartwig.actin.datamodel.PatientRecord
-import com.hartwig.actin.datamodel.algo.Evaluation
-import com.hartwig.actin.datamodel.clinical.IhcTest
+import com.hartwig.actin.algo.evaluation.Evaluation
+import com.hartwig.actin.datamodel.clinical.treatment.IhcTest
 
 class MolecularResultsAreKnownForPromoterOfGene(private val gene: String) : EvaluationFunction {
 
@@ -18,7 +18,7 @@ class MolecularResultsAreKnownForPromoterOfGene(private val gene: String) : Eval
 
             indeterminatePriorTests.isNotEmpty() -> EvaluationFactory.warn("Test for $gene promoter was done by IHC but indeterminate status")
 
-            else -> EvaluationFactory.recoverableFail("$gene promoter status not tested")
+            else -> EvaluationFactory.fail("$gene promoter status not tested")
         }
     }
 }

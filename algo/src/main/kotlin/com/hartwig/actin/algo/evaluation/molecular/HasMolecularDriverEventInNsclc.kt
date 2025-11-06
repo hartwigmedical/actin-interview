@@ -4,9 +4,8 @@ import com.hartwig.actin.algo.evaluation.EvaluationFunction
 import com.hartwig.actin.algo.evaluation.composite.Or
 import com.hartwig.actin.algo.evaluation.util.Format
 import com.hartwig.actin.datamodel.PatientRecord
-import com.hartwig.actin.datamodel.algo.Evaluation
-import com.hartwig.actin.datamodel.algo.EvaluationResult
-import com.hartwig.actin.datamodel.algo.StaticMessage
+import com.hartwig.actin.algo.evaluation.Evaluation
+import com.hartwig.actin.algo.evaluation.EvaluationResult
 import java.time.LocalDate
 
 private val ACTIVATING_MUTATION_LIST = listOf("EGFR", "ERBB2")
@@ -72,21 +71,21 @@ class HasMolecularDriverEventInNsclc(
         )
     }
 
-    private fun writePassMessage(passInput: Set<String>, mustWarn: Boolean, message: String): Set<StaticMessage> {
-        return if (mustWarn || passInput.isEmpty()) emptySet() else setOf(StaticMessage(message))
+    private fun writePassMessage(passInput: Set<String>, mustWarn: Boolean, message: String): Set<String> {
+        return if (mustWarn || passInput.isEmpty()) emptySet() else setOf(message)
     }
 
-    private fun writeWarnMessage(passInput: Set<String>, warnInput: Set<String>, mustWarn: Boolean, message: String): Set<StaticMessage> {
+    private fun writeWarnMessage(passInput: Set<String>, warnInput: Set<String>, mustWarn: Boolean, message: String): Set<String> {
         return when {
-            mustWarn && passInput.isNotEmpty() -> setOf(StaticMessage("Potential $message (but undetermined if applicable)"))
+            mustWarn && passInput.isNotEmpty() -> setOf("Potential $message (but undetermined if applicable)")
 
-            warnInput.isNotEmpty() -> setOf(StaticMessage("Potential $message"))
+            warnInput.isNotEmpty() -> setOf("Potential $message")
 
             else -> emptySet()
         }
     }
 
-    private fun writeFailMessage(failInput: Set<String>): Set<StaticMessage> {
-        return if (failInput.isEmpty()) emptySet() else setOf(StaticMessage("No (applicable) NSCLC driver event(s) detected"))
+    private fun writeFailMessage(failInput: Set<String>): Set<String> {
+        return if (failInput.isEmpty()) emptySet() else setOf("No (applicable) NSCLC driver event(s) detected")
     }
 }

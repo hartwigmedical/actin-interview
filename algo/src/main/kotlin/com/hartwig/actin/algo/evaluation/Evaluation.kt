@@ -1,4 +1,4 @@
-package com.hartwig.actin
+package com.hartwig.actin.algo.evaluation
 
 data class Evaluation(
     val result: EvaluationResult,
@@ -11,10 +11,10 @@ data class Evaluation(
     val failMessages: Set<String> = emptySet(),
     val isMissingMolecularResultForEvaluation: Boolean = false
 ) {
-    fun passMessagesStrings() = passMessages.map { it.toString() }.toSet()
-    fun warnMessagesStrings() = warnMessages.map { it.toString() }.toSet()
-    fun undeterminedMessagesStrings() = undeterminedMessages.map { it.toString() }.toSet()
-    fun failMessagesStrings() = failMessages.map { it.toString() }.toSet()
+    fun passMessagesStrings() = passMessages
+    fun warnMessagesStrings() = warnMessages
+    fun undeterminedMessagesStrings() = undeterminedMessages
+    fun failMessagesStrings() = failMessages
 
     fun addMessagesAndEvents(other: Evaluation): Evaluation {
         return Evaluation(

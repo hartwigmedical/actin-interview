@@ -3,14 +3,12 @@ package com.hartwig.actin.algo.evaluation.molecular
 import com.hartwig.actin.algo.evaluation.EvaluationFactory
 import com.hartwig.actin.algo.evaluation.util.Format.concat
 import com.hartwig.actin.algo.evaluation.util.Format.percentage
-import com.hartwig.actin.datamodel.algo.Evaluation
+import com.hartwig.actin.algo.evaluation.Evaluation
 import com.hartwig.actin.datamodel.molecular.MolecularTest
 import com.hartwig.actin.datamodel.molecular.MolecularTestTarget
 import com.hartwig.actin.datamodel.molecular.driver.TranscriptVariantImpact
 import com.hartwig.actin.datamodel.molecular.driver.Variant
-import com.hartwig.actin.molecular.interpretation.MolecularInputChecker
 import java.time.LocalDate
-import org.apache.logging.log4j.LogManager
 
 private const val CLONAL_CUTOFF = 0.5
 
@@ -33,8 +31,6 @@ class GeneHasVariantWithProteinImpact(
     ),
     maxTestAge = maxTestAge
 ) {
-
-    private val logger = LogManager.getLogger(GeneHasVariantWithProteinImpact::class.java)
 
     override fun evaluate(test: MolecularTest): Evaluation {
 
@@ -106,13 +102,6 @@ class GeneHasVariantWithProteinImpact(
     }
 
     private fun toProteinImpact(hgvsProteinImpact: String): String {
-        val impact = if (hgvsProteinImpact.startsWith("p.")) hgvsProteinImpact.substring(2) else hgvsProteinImpact
-        if (impact.isEmpty()) {
-            return impact
-        }
-        if (!MolecularInputChecker.isProteinImpact(impact)) {
-            logger.warn("Cannot convert hgvs protein impact to a usable protein impact: {}", hgvsProteinImpact)
-        }
-        return impact
+        return if (hgvsProteinImpact.startsWith("p.")) hgvsProteinImpact.substring(2) else hgvsProteinImpact
     }
 }

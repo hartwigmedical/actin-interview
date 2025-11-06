@@ -1,10 +1,10 @@
 package com.hartwig.actin.algo.evaluation.molecular
 
+import com.hartwig.actin.algo.evaluation.Evaluation
 import com.hartwig.actin.algo.evaluation.EvaluationFactory
 import com.hartwig.actin.algo.evaluation.EvaluationFunction
+import com.hartwig.actin.algo.evaluation.EvaluationResult
 import com.hartwig.actin.datamodel.PatientRecord
-import com.hartwig.actin.datamodel.algo.Evaluation
-import com.hartwig.actin.datamodel.algo.EvaluationResult
 import com.hartwig.actin.datamodel.molecular.MolecularTest
 import com.hartwig.actin.molecular.filter.MolecularTestFilter
 import java.time.LocalDate
@@ -31,7 +31,7 @@ abstract class MolecularEvaluationFunction(
                 return Evaluation(
                     recoverable = false,
                     result = EvaluationResult.UNDETERMINED,
-                    undeterminedMessages = setOf(targetCoveragePredicate.message(gene!!)),
+                    undeterminedMessages = setOf(targetCoveragePredicate.message(gene!!).toString()),
                     isMissingMolecularResultForEvaluation = true
                 )
 

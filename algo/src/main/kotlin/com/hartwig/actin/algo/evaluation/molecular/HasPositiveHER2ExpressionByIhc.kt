@@ -2,12 +2,12 @@ package com.hartwig.actin.algo.evaluation.molecular
 
 import com.hartwig.actin.algo.evaluation.EvaluationFactory
 import com.hartwig.actin.algo.evaluation.EvaluationFunction
-import com.hartwig.actin.algo.evaluation.IhcTestEvaluation
 import com.hartwig.actin.algo.evaluation.molecular.IhcTestClassificationFunctions.TestResult
 import com.hartwig.actin.algo.evaluation.molecular.IhcTestClassificationFunctions.classifyHer2Test
 import com.hartwig.actin.algo.evaluation.molecular.MolecularRuleEvaluator.geneIsAmplifiedForPatient
 import com.hartwig.actin.datamodel.PatientRecord
-import com.hartwig.actin.datamodel.algo.Evaluation
+import com.hartwig.actin.algo.evaluation.Evaluation
+import com.hartwig.actin.algo.evaluation.IhcTestEvaluation
 import java.time.LocalDate
 
 class HasPositiveHER2ExpressionByIhc(private val maxTestAge: LocalDate? = null) : EvaluationFunction {
@@ -43,7 +43,7 @@ class HasPositiveHER2ExpressionByIhc(private val maxTestAge: LocalDate? = null) 
             her2TestResults.all { it == TestResult.NEGATIVE } -> {
                 val failMessage = "Has no positive HER2 IHC result"
                 if (geneERBB2IsAmplified) {
-                    EvaluationFactory.recoverableFail("$failMessage (but ERBB2 amplification detected)")
+                    EvaluationFactory.fail("$failMessage (but ERBB2 amplification detected)")
                 } else {
                     EvaluationFactory.fail(failMessage)
                 }

@@ -1,9 +1,9 @@
 package com.hartwig.actin.algo.evaluation.molecular
 
+import com.hartwig.actin.algo.evaluation.Evaluation
 import com.hartwig.actin.algo.evaluation.EvaluationFactory
+import com.hartwig.actin.algo.evaluation.EvaluationResult
 import com.hartwig.actin.algo.evaluation.util.Format.concat
-import com.hartwig.actin.datamodel.algo.Evaluation
-import com.hartwig.actin.datamodel.algo.EvaluationResult
 import com.hartwig.actin.datamodel.molecular.MolecularTest
 import java.time.LocalDate
 
@@ -24,8 +24,7 @@ class AnyGeneFromSetIsOverexpressed(
         return if (amplifiedGenes.isNotEmpty()) {
             EvaluationFactory.warn(
                 "Amplification of ${concat(amplifiedGenes)} detected and therefore possible overexpression in RNA",
-                isMissingMolecularResultForEvaluation = true,
-                inclusionEvents = amplifiedGenes.map { "Potential $it overexpression" }.toSet()
+                isMissingMolecularResultForEvaluation = true
             )
         } else {
             EvaluationFactory.undetermined(

@@ -1,7 +1,7 @@
 package com.hartwig.actin.algo.evaluation.molecular
 
 import com.hartwig.actin.algo.evaluation.IhcTestEvaluationConstants
-import com.hartwig.actin.datamodel.clinical.IhcTest
+import com.hartwig.actin.datamodel.clinical.treatment.IhcTest
 
 object IhcTestClassificationFunctions {
 

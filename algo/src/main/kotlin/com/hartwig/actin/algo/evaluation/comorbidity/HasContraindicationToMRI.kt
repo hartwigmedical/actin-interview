@@ -4,9 +4,9 @@ import com.hartwig.actin.algo.evaluation.EvaluationFactory
 import com.hartwig.actin.algo.evaluation.EvaluationFunction
 import com.hartwig.actin.algo.evaluation.util.Format
 import com.hartwig.actin.algo.evaluation.util.ValueComparison.stringCaseInsensitivelyMatchesQueryCollection
-import com.hartwig.actin.algo.icd.IcdConstants
 import com.hartwig.actin.datamodel.PatientRecord
-import com.hartwig.actin.datamodel.algo.Evaluation
+import com.hartwig.actin.algo.evaluation.Evaluation
+import com.hartwig.actin.datamodel.IcdConstants
 import com.hartwig.actin.datamodel.clinical.IcdCode
 import com.hartwig.actin.icd.IcdModel
 
@@ -27,10 +27,10 @@ class HasContraindicationToMRI(private val icdModel: IcdModel) : EvaluationFunct
         val messageStart = "Potential MRI contraindication: "
 
         return when {
-            matchingComorbidities.isNotEmpty() -> EvaluationFactory.recoverablePass(messageStart + conditionString)
+            matchingComorbidities.isNotEmpty() -> EvaluationFactory.pass(messageStart + conditionString, recoverable = true)
 
             comorbiditiesMatchingString.isNotEmpty() -> {
-                EvaluationFactory.recoverablePass(messageStart + Format.concatItemsWithAnd(comorbiditiesMatchingString))
+                EvaluationFactory.pass(messageStart + Format.concatItemsWithAnd(comorbiditiesMatchingString), recoverable = true)
             }
 
             else -> EvaluationFactory.fail("No potential contraindications to MRI")

@@ -1,14 +1,14 @@
 package com.hartwig.actin.algo.evaluation.molecular
 
-import com.hartwig.actin.algo.doid.DoidConstants
 import com.hartwig.actin.algo.evaluation.EvaluationFactory
-import com.hartwig.actin.algo.evaluation.tumor.DoidEvaluationFunctions
 import com.hartwig.actin.algo.evaluation.util.ValueComparison.evaluateVersusMaxValue
 import com.hartwig.actin.algo.evaluation.util.ValueComparison.evaluateVersusMinValue
 import com.hartwig.actin.datamodel.PatientRecord
-import com.hartwig.actin.datamodel.algo.Evaluation
-import com.hartwig.actin.datamodel.algo.EvaluationResult
-import com.hartwig.actin.datamodel.clinical.IhcTest
+import com.hartwig.actin.algo.evaluation.Evaluation
+import com.hartwig.actin.algo.evaluation.EvaluationResult
+import com.hartwig.actin.datamodel.clinical.treatment.IhcTest
+import com.hartwig.actin.doid.DoidConstants
+import com.hartwig.actin.doid.DoidEvaluationFunctions
 import com.hartwig.actin.doid.DoidModel
 
 private enum class TestResult {
@@ -77,7 +77,7 @@ object PDL1EvaluationFunctions {
             }
 
             IhcTestFilter.allPDL1Tests(ihcTests).isNotEmpty() -> {
-                EvaluationFactory.recoverableFail("PD-L1 tests not in correct unit ($measure)")
+                EvaluationFactory.fail("PD-L1 tests not in correct unit ($measure)")
             }
 
             else -> EvaluationFactory.undetermined("PD-L1 expression (IHC) not tested", isMissingMolecularResultForEvaluation = true)

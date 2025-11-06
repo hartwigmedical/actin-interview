@@ -3,8 +3,8 @@ package com.hartwig.actin.algo.evaluation.molecular
 import com.hartwig.actin.algo.evaluation.EvaluationFactory
 import com.hartwig.actin.algo.evaluation.EvaluationFunction
 import com.hartwig.actin.datamodel.PatientRecord
-import com.hartwig.actin.datamodel.algo.Evaluation
-import com.hartwig.actin.datamodel.clinical.IhcTest
+import com.hartwig.actin.algo.evaluation.Evaluation
+import com.hartwig.actin.datamodel.clinical.treatment.IhcTest
 import com.hartwig.actin.datamodel.molecular.ExperimentType
 import com.hartwig.actin.datamodel.molecular.MolecularHistory
 import com.hartwig.actin.datamodel.molecular.MolecularTest
@@ -58,7 +58,7 @@ class MolecularResultsAreKnownForGene(private val gene: String) : EvaluationFunc
             }
 
             else -> {
-                EvaluationFactory.recoverableFail("$gene not tested")
+                EvaluationFactory.fail("$gene not tested")
             }
         }
     }

@@ -1,6 +1,6 @@
 package com.hartwig.actin.algo.evaluation.comorbidity
 
-import com.hartwig.actin.EvaluationResult
+import com.hartwig.actin.algo.evaluation.EvaluationResult
 import com.hartwig.actin.algo.evaluation.EvaluationAssert.assertEvaluation
 import com.hartwig.actin.algo.evaluation.comorbidity.ComorbidityTestFactory.intolerance
 import com.hartwig.actin.algo.evaluation.comorbidity.ComorbidityTestFactory.otherCondition

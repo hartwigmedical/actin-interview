@@ -3,8 +3,8 @@ package com.hartwig.actin.algo.evaluation.molecular
 import com.hartwig.actin.algo.evaluation.EvaluationFactory
 import com.hartwig.actin.algo.evaluation.EvaluationFunction
 import com.hartwig.actin.datamodel.PatientRecord
-import com.hartwig.actin.datamodel.algo.Evaluation
-import com.hartwig.actin.datamodel.clinical.IhcTest
+import com.hartwig.actin.algo.evaluation.Evaluation
+import com.hartwig.actin.datamodel.clinical.treatment.IhcTest
 import com.hartwig.actin.datamodel.molecular.ExperimentType
 import com.hartwig.actin.datamodel.molecular.MolecularHistory
 import com.hartwig.actin.datamodel.molecular.driver.VirusType
@@ -29,10 +29,10 @@ class HasKnownHPVStatus : EvaluationFunction {
             indeterminateIhcTestsForHpv.isNotEmpty() -> EvaluationFactory.warn("HPV tested before but indeterminate status")
 
             molecularRecords.any { it.experimentType == ExperimentType.HARTWIG_WHOLE_GENOME } -> {
-                EvaluationFactory.recoverableFail("HPV status undetermined (WGS contained no tumor cells)")
+                EvaluationFactory.fail("HPV status undetermined (WGS contained no tumor cells)")
             }
 
-            else -> EvaluationFactory.recoverableFail("HPV status not known")
+            else -> EvaluationFactory.fail("HPV status not known")
         }
     }
 }
