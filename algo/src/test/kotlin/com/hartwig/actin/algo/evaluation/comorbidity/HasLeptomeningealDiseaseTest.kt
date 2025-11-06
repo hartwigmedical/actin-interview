@@ -1,8 +1,8 @@
 package com.hartwig.actin.algo.evaluation.comorbidity
 
 import com.hartwig.actin.algo.evaluation.EvaluationAssert.assertEvaluation
-import com.hartwig.actin.algo.icd.IcdConstants
-import com.hartwig.actin.datamodel.algo.EvaluationResult
+import com.hartwig.actin.algo.evaluation.EvaluationResult
+import com.hartwig.actin.datamodel.IcdConstants
 import com.hartwig.actin.icd.IcdModel
 import com.hartwig.actin.icd.datamodel.IcdNode
 import org.assertj.core.api.Assertions.assertThat

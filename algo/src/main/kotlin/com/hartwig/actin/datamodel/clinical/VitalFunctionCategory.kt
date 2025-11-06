@@ -1,6 +1,6 @@
 package com.hartwig.actin.datamodel.clinical
 
-import com.hartwig.actin.Displayable
+import com.hartwig.actin.datamodel.Displayable
 
 enum class VitalFunctionCategory(private val display: String) : Displayable {
     NON_INVASIVE_BLOOD_PRESSURE("Non-invasive blood pressure"),

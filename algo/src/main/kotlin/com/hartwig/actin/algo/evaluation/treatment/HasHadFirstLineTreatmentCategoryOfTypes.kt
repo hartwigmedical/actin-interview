@@ -3,7 +3,7 @@ package com.hartwig.actin.algo.evaluation.treatment
 import com.hartwig.actin.algo.evaluation.EvaluationFactory
 import com.hartwig.actin.algo.evaluation.EvaluationFunction
 import com.hartwig.actin.datamodel.PatientRecord
-import com.hartwig.actin.datamodel.algo.Evaluation
+import com.hartwig.actin.algo.evaluation.Evaluation
 
 //TODO: Implement patient has had treatment of category X according to 2] below, and corresponding type in Y as first treatment line. If a surgery is present and the line is the first line after surgery, resolve to `UNDETERMINED`
 class HasHadFirstLineTreatmentCategoryOfTypes : EvaluationFunction {

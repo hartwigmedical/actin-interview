@@ -1,6 +1,6 @@
 package com.hartwig.actin.datamodel.clinical.treatment.history
 
-import com.hartwig.actin.Displayable
+import com.hartwig.actin.datamodel.Displayable
 
 enum class Intent(private val display: String) : Displayable {
     ADJUVANT("Adjuvant"),

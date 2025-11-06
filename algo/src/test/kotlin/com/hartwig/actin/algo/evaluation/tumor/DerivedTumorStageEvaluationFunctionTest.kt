@@ -4,8 +4,7 @@ import com.hartwig.actin.algo.evaluation.EvaluationAssert.assertEvaluation
 import com.hartwig.actin.algo.evaluation.EvaluationFunction
 import com.hartwig.actin.datamodel.PatientRecord
 import com.hartwig.actin.datamodel.TestPatientFactory
-import com.hartwig.actin.datamodel.algo.EvaluationResult
-import com.hartwig.actin.datamodel.algo.EvaluationTestFactory
+import com.hartwig.actin.algo.evaluation.EvaluationResult
 import com.hartwig.actin.datamodel.clinical.TumorStage
 import io.mockk.every
 import io.mockk.mockk

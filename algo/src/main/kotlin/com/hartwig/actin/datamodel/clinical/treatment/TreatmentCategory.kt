@@ -1,6 +1,6 @@
 package com.hartwig.actin.datamodel.clinical.treatment
 
-import com.hartwig.actin.Displayable
+import com.hartwig.actin.datamodel.Displayable
 
 enum class TreatmentCategory : Displayable {
     CHEMOTHERAPY,
@@ -14,6 +14,11 @@ enum class TreatmentCategory : Displayable {
     SUPPORTIVE_TREATMENT;
 
     override fun display(): String {
-        return this.toString().lowercase()
+        return this.toString().replace("_", " ").lowercase()
+    }
+
+    companion object {
+        val SYSTEMIC_CANCER_TREATMENT_CATEGORIES: Set<TreatmentCategory> =
+            setOf(CHEMOTHERAPY, TARGETED_THERAPY, IMMUNOTHERAPY, HORMONE_THERAPY)
     }
 }

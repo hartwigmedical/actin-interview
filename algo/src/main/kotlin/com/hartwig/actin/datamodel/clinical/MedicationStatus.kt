@@ -1,6 +1,6 @@
 package com.hartwig.actin.datamodel.clinical
 
-import com.hartwig.actin.Displayable
+import com.hartwig.actin.datamodel.Displayable
 
 enum class MedicationStatus(private val display: String) : Displayable {
     ACTIVE("Active"),

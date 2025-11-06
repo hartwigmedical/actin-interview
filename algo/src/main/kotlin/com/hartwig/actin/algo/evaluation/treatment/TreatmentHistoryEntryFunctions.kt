@@ -1,6 +1,5 @@
 package com.hartwig.actin.algo.evaluation.treatment
 
-import com.hartwig.actin.clinical.interpretation.ProgressiveDiseaseFunctions
 import com.hartwig.actin.datamodel.clinical.treatment.Drug
 import com.hartwig.actin.datamodel.clinical.treatment.DrugTreatment
 import com.hartwig.actin.datamodel.clinical.treatment.Treatment
@@ -63,10 +62,10 @@ object TreatmentHistoryEntryFunctions {
     fun fullTreatmentDisplay(entry: TreatmentHistoryEntry): String {
         return entry.treatmentHistoryDetails?.let { details ->
             val switchToTreatmentDisplay = if (details.switchToTreatments.isNullOrEmpty()) "" else {
-                " with switch to " + details.switchToTreatments!!.joinToString(" then ") { it.treatment.display() }
+                " with switch to " + details.switchToTreatments.joinToString(" then ") { it.treatment.display() }
             }
             val maintenanceTreatmentDisplay = details.maintenanceTreatment?.let {
-                " continued with ${details.maintenanceTreatment!!.treatment.display()} maintenance"
+                " continued with ${details.maintenanceTreatment.treatment.display()} maintenance"
             } ?: ""
             entry.treatmentDisplay() + switchToTreatmentDisplay + maintenanceTreatmentDisplay
         } ?: entry.treatmentDisplay()

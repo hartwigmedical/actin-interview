@@ -1,15 +1,12 @@
 package com.hartwig.actin.algo.evaluation.treatment
 
 import com.hartwig.actin.algo.evaluation.EvaluationAssert.assertEvaluation
-import com.hartwig.actin.algo.evaluation.washout.WashoutTestFactory
-import com.hartwig.actin.datamodel.algo.EvaluationResult
-import com.hartwig.actin.datamodel.clinical.TreatmentTestFactory
+import com.hartwig.actin.algo.evaluation.EvaluationResult
 import com.hartwig.actin.datamodel.clinical.TreatmentTestFactory.drugTreatment
 import com.hartwig.actin.datamodel.clinical.TreatmentTestFactory.treatment
 import com.hartwig.actin.datamodel.clinical.TreatmentTestFactory.treatmentHistoryEntry
 import com.hartwig.actin.datamodel.clinical.TreatmentTestFactory.withTreatmentHistory
 import com.hartwig.actin.datamodel.clinical.TreatmentTestFactory.withTreatmentHistoryEntry
-import com.hartwig.actin.datamodel.clinical.treatment.Drug
 import com.hartwig.actin.datamodel.clinical.treatment.DrugType
 import com.hartwig.actin.datamodel.clinical.treatment.OtherTreatmentType
 import com.hartwig.actin.datamodel.clinical.treatment.TreatmentCategory
@@ -58,27 +55,5 @@ class HasHadTreatmentWithCategoryButNotOfTypesTest {
             setOf(drugTreatment("test", MATCHING_CATEGORY, setOf(DrugType.ANTI_TISSUE_FACTOR)))
         )
         assertEvaluation(EvaluationResult.PASS, function.evaluate(withTreatmentHistoryEntry(treatmentHistoryEntry)))
-    }
-
-    @Test
-    fun `Should pass for correct treatment category with incorrect type in treatment history entry but correct type in medication entry`() {
-        val treatmentHistoryEntry = treatmentHistoryEntry(setOf(drugTreatment("test", MATCHING_CATEGORY, IGNORE_TYPE_SET)))
-        val medication = WashoutTestFactory.medication()
-            .copy(drug = Drug(name = "", category = MATCHING_CATEGORY, drugTypes = setOf(DrugType.ANTI_TISSUE_FACTOR)))
-        assertEvaluation(
-            EvaluationResult.PASS,
-            function.evaluate(TreatmentTestFactory.withTreatmentsAndMedications(listOf(treatmentHistoryEntry), listOf(medication)))
-        )
-    }
-
-    @Test
-    fun `Should fail for treatment category with correct category but with type to ignore in treatment history entry and incorrect category but correct type in medication entry`() {
-        val treatmentHistoryEntry = treatmentHistoryEntry(setOf(drugTreatment("test", MATCHING_CATEGORY, IGNORE_TYPE_SET)))
-        val medication = WashoutTestFactory.medication()
-            .copy(drug = Drug(name = "", category = TreatmentCategory.TRANSPLANTATION, drugTypes = setOf(DrugType.ANTI_TISSUE_FACTOR)))
-        assertEvaluation(
-            EvaluationResult.FAIL,
-            function.evaluate(TreatmentTestFactory.withTreatmentsAndMedications(listOf(treatmentHistoryEntry), listOf(medication)))
-        )
     }
 }

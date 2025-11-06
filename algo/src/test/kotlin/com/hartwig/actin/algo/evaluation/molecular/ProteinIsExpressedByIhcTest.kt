@@ -2,7 +2,7 @@ package com.hartwig.actin.algo.evaluation.molecular
 
 import com.hartwig.actin.algo.evaluation.EvaluationAssert.assertMolecularEvaluation
 import com.hartwig.actin.algo.evaluation.IhcTestEvaluationConstants
-import com.hartwig.actin.datamodel.algo.EvaluationResult
+import com.hartwig.actin.algo.evaluation.EvaluationResult
 import com.hartwig.actin.algo.evaluation.molecular.MolecularTestFactory.ihcTest
 import org.junit.Test
 

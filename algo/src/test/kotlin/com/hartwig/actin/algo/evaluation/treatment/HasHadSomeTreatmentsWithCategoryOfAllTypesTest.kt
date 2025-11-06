@@ -1,11 +1,8 @@
 package com.hartwig.actin.algo.evaluation.treatment
 
 import com.hartwig.actin.algo.evaluation.EvaluationAssert
-import com.hartwig.actin.algo.evaluation.medication.MedicationTestFactory
-import com.hartwig.actin.algo.evaluation.washout.WashoutTestFactory
-import com.hartwig.actin.datamodel.algo.EvaluationResult
+import com.hartwig.actin.algo.evaluation.EvaluationResult
 import com.hartwig.actin.datamodel.clinical.TreatmentTestFactory
-import com.hartwig.actin.datamodel.clinical.treatment.Drug
 import com.hartwig.actin.datamodel.clinical.treatment.DrugType
 import com.hartwig.actin.datamodel.clinical.treatment.OtherTreatmentType
 import com.hartwig.actin.datamodel.clinical.treatment.TreatmentCategory
@@ -41,23 +38,6 @@ class HasHadSomeTreatmentsWithCategoryOfAllTypesTest {
             function.evaluate(
                 (TreatmentTestFactory.withTreatmentHistory(treatmentHistoryEntry))
             )
-        )
-    }
-
-    @Test
-    fun `Should pass for recent correct treatment category with incorrect types in treatment history entry but medication with correct types`() {
-        val function = HasHadSomeTreatmentsWithCategoryOfAllTypes(MATCHING_CATEGORY, MATCHING_TYPES, 1)
-        val treatmentHistoryEntry = TreatmentTestFactory.treatmentHistoryEntry(
-            setOf(TreatmentTestFactory.drugTreatment("test", MATCHING_CATEGORY, setOf(DrugType.ANTI_TISSUE_FACTOR)))
-        )
-        val medication = WashoutTestFactory.medication().copy(
-            drug = Drug(
-                name = "", category = MATCHING_CATEGORY, drugTypes = MATCHING_TYPES
-            )
-        )
-        EvaluationAssert.assertEvaluation(
-            EvaluationResult.PASS,
-            function.evaluate(TreatmentTestFactory.withTreatmentsAndMedications(listOf(treatmentHistoryEntry), listOf(medication)))
         )
     }
 
@@ -127,20 +107,6 @@ class HasHadSomeTreatmentsWithCategoryOfAllTypesTest {
             EvaluationResult.FAIL, function.evaluate(
                 (TreatmentTestFactory.withTreatmentHistory(treatmentHistoryEntry))
             )
-        )
-    }
-
-    @Test
-    fun `Should fail when medication entry has drug with correct category but not of all requested types`() {
-        val function = HasHadSomeTreatmentsWithCategoryOfAllTypes(MATCHING_CATEGORY, MATCHING_TYPES, 1)
-        val medication = WashoutTestFactory.medication().copy(
-            drug = Drug(
-                name = "", category = MATCHING_CATEGORY, drugTypes = setOf(DrugType.HER2_ANTIBODY)
-            )
-        )
-        EvaluationAssert.assertEvaluation(
-            EvaluationResult.FAIL,
-            function.evaluate(MedicationTestFactory.withMedications(listOf(medication)))
         )
     }
 

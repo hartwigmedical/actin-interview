@@ -2,14 +2,12 @@ package com.hartwig.actin.algo.evaluation.treatment
 
 import com.hartwig.actin.algo.evaluation.EvaluationFactory.fail
 import com.hartwig.actin.algo.evaluation.EvaluationFactory.pass
-import com.hartwig.actin.algo.evaluation.EvaluationFactory.recoverableUndetermined
 import com.hartwig.actin.algo.evaluation.EvaluationFactory.undetermined
 import com.hartwig.actin.algo.evaluation.EvaluationFunction
 import com.hartwig.actin.algo.evaluation.util.Format
-import com.hartwig.actin.calendar.DateComparison.minWeeksBetweenDates
-import com.hartwig.actin.clinical.interpretation.ProgressiveDiseaseFunctions
 import com.hartwig.actin.datamodel.PatientRecord
-import com.hartwig.actin.datamodel.algo.Evaluation
+import com.hartwig.actin.algo.evaluation.Evaluation
+import com.hartwig.actin.algo.evaluation.util.DateComparison.minWeeksBetweenDates
 import com.hartwig.actin.datamodel.clinical.treatment.TreatmentCategory
 import com.hartwig.actin.datamodel.clinical.treatment.TreatmentType
 
@@ -73,15 +71,15 @@ class HasHadPDFollowingTreatmentWithCategoryOfTypesAndCyclesOrWeeks(
             }
 
             PDFollowingTreatmentEvaluation.HAS_HAD_TREATMENT_WITH_UNCLEAR_PD_STATUS in treatmentEvaluations -> {
-                recoverableUndetermined("Has received ${treatment()} but uncertain if there has been PD")
+                undetermined("Has received ${treatment()} but uncertain if there has been PD")
             }
 
             PDFollowingTreatmentEvaluation.HAS_HAD_TREATMENT_WITH_UNCLEAR_PD_STATUS_AND_UNCLEAR_CYCLES in treatmentEvaluations -> {
-                recoverableUndetermined("Has received ${treatment()} but uncertain if there has been PD & unknown nr of cycles")
+                undetermined("Has received ${treatment()} but uncertain if there has been PD & unknown nr of cycles")
             }
 
             PDFollowingTreatmentEvaluation.HAS_HAD_TREATMENT_WITH_UNCLEAR_PD_STATUS_AND_UNCLEAR_WEEKS in treatmentEvaluations -> {
-                recoverableUndetermined("Has received ${treatment()} but uncertain if there has been PD & unclear nr of weeks")
+                undetermined("Has received ${treatment()} but uncertain if there has been PD & unclear nr of weeks")
             }
 
             PDFollowingTreatmentEvaluation.HAS_HAD_UNCLEAR_TREATMENT_OR_TRIAL in treatmentEvaluations -> {

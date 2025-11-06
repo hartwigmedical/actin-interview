@@ -1,8 +1,8 @@
 package com.hartwig.actin.algo.evaluation.molecular
 
 import com.hartwig.actin.algo.evaluation.EvaluationAssert.assertEvaluation
-import com.hartwig.actin.datamodel.algo.EvaluationResult
-import com.hartwig.actin.datamodel.clinical.IhcTest
+import com.hartwig.actin.algo.evaluation.EvaluationResult
+import com.hartwig.actin.datamodel.clinical.treatment.IhcTest
 import org.junit.Test
 
 class MolecularResultsAreKnownForPromoterOfGeneTest {

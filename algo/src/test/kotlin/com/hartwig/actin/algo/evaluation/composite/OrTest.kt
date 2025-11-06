@@ -5,9 +5,8 @@ import com.hartwig.actin.algo.evaluation.EvaluationFunction
 import com.hartwig.actin.algo.evaluation.TestEvaluationFunctionFactory
 import com.hartwig.actin.datamodel.PatientRecord
 import com.hartwig.actin.datamodel.TestPatientFactory
-import com.hartwig.actin.datamodel.algo.Evaluation
-import com.hartwig.actin.datamodel.algo.EvaluationResult
-import com.hartwig.actin.datamodel.algo.StaticMessage
+import com.hartwig.actin.algo.evaluation.Evaluation
+import com.hartwig.actin.algo.evaluation.EvaluationResult
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
@@ -110,7 +109,7 @@ class OrTest {
             Evaluation(
                 result = EvaluationResult.WARN,
                 recoverable = true,
-                warnMessages = setOf(StaticMessage("warn 1")),
+                warnMessages = setOf("warn 1"),
                 inclusionMolecularEvents = setOf("inclusion event")
             )
         }
@@ -118,7 +117,7 @@ class OrTest {
             Evaluation(
                 result = EvaluationResult.UNDETERMINED,
                 recoverable = true,
-                undeterminedMessages = setOf(StaticMessage("undetermined 1")),
+                undeterminedMessages = setOf("undetermined 1"),
                 isMissingMolecularResultForEvaluation = true
             )
         }

@@ -1,6 +1,6 @@
 package com.hartwig.actin.datamodel.clinical.treatment.history
 
-import com.hartwig.actin.clinical.datamodel.treatment.Treatment
+import com.hartwig.actin.datamodel.clinical.treatment.Treatment
 
 data class TreatmentStage(
     val treatment: Treatment,

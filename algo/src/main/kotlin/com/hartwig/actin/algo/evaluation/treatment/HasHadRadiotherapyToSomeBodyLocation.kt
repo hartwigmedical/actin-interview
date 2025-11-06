@@ -3,7 +3,7 @@ package com.hartwig.actin.algo.evaluation.treatment
 import com.hartwig.actin.algo.evaluation.EvaluationFactory
 import com.hartwig.actin.algo.evaluation.EvaluationFunction
 import com.hartwig.actin.datamodel.PatientRecord
-import com.hartwig.actin.datamodel.algo.Evaluation
+import com.hartwig.actin.algo.evaluation.Evaluation
 import com.hartwig.actin.datamodel.clinical.treatment.TreatmentCategory
 
 class HasHadRadiotherapyToSomeBodyLocation(private val bodyLocation: String) : EvaluationFunction {
@@ -25,7 +25,7 @@ class HasHadRadiotherapyToSomeBodyLocation(private val bodyLocation: String) : E
             }
 
             priorRadiotherapies.any { it.treatmentHistoryDetails?.bodyLocations == null } -> {
-                EvaluationFactory.recoverableUndetermined("Has received radiotherapy but undetermined if target location was $bodyLocation")
+                EvaluationFactory.undetermined("Has received radiotherapy but undetermined if target location was $bodyLocation")
             }
 
             else -> {

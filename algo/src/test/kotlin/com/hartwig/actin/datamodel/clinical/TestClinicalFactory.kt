@@ -1,8 +1,8 @@
 package com.hartwig.actin.com.hartwig.actin.datamodel.clinical
 
-import com.hartwig.actin.com.hartwig.actin.datamodel.clinical.TreatmentTestFactory.drugTreatment
-import com.hartwig.actin.com.hartwig.actin.datamodel.clinical.TreatmentTestFactory.treatmentHistoryEntry
-import com.hartwig.actin.com.hartwig.actin.datamodel.clinical.TreatmentTestFactory.treatmentStage
+import com.hartwig.actin.datamodel.clinical.TreatmentTestFactory.drugTreatment
+import com.hartwig.actin.datamodel.clinical.TreatmentTestFactory.treatmentHistoryEntry
+import com.hartwig.actin.datamodel.clinical.TreatmentTestFactory.treatmentStage
 import com.hartwig.actin.datamodel.TestPatientFactory
 import com.hartwig.actin.datamodel.clinical.BloodTransfusion
 import com.hartwig.actin.datamodel.clinical.BodyWeight
@@ -32,6 +32,7 @@ import com.hartwig.actin.datamodel.clinical.TumorStage
 import com.hartwig.actin.datamodel.clinical.TumorStatus
 import com.hartwig.actin.datamodel.clinical.VitalFunction
 import com.hartwig.actin.datamodel.clinical.VitalFunctionCategory
+import com.hartwig.actin.datamodel.clinical.WhoStatus
 import com.hartwig.actin.datamodel.clinical.treatment.Drug
 import com.hartwig.actin.datamodel.clinical.treatment.DrugTreatment
 import com.hartwig.actin.datamodel.clinical.treatment.DrugType

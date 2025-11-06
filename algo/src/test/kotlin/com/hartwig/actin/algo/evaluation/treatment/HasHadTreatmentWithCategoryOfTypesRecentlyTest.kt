@@ -1,16 +1,13 @@
 package com.hartwig.actin.algo.evaluation.treatment
 
 import com.hartwig.actin.algo.evaluation.EvaluationAssert.assertEvaluation
-import com.hartwig.actin.algo.evaluation.washout.WashoutTestFactory
 import com.hartwig.actin.datamodel.PatientRecord
-import com.hartwig.actin.datamodel.algo.EvaluationResult
+import com.hartwig.actin.algo.evaluation.EvaluationResult
 import com.hartwig.actin.datamodel.clinical.TreatmentTestFactory.drugTreatment
 import com.hartwig.actin.datamodel.clinical.TreatmentTestFactory.treatment
 import com.hartwig.actin.datamodel.clinical.TreatmentTestFactory.treatmentHistoryEntry
 import com.hartwig.actin.datamodel.clinical.TreatmentTestFactory.withTreatmentHistory
 import com.hartwig.actin.datamodel.clinical.TreatmentTestFactory.withTreatmentHistoryEntry
-import com.hartwig.actin.datamodel.clinical.TreatmentTestFactory.withTreatmentsAndMedications
-import com.hartwig.actin.datamodel.clinical.treatment.Drug
 import com.hartwig.actin.datamodel.clinical.treatment.DrugType
 import com.hartwig.actin.datamodel.clinical.treatment.OtherTreatmentType
 import com.hartwig.actin.datamodel.clinical.treatment.TreatmentCategory
@@ -23,11 +20,10 @@ private val MIN_DATE = LocalDate.of(2022, 4, 1)
 
 class HasHadTreatmentWithCategoryOfTypesRecentlyTest {
 
-    private val interpreter = WashoutTestFactory.activeFromDate(MIN_DATE)
     private val functionWithTypes =
-        HasHadTreatmentWithCategoryOfTypesRecently(TreatmentCategory.TARGETED_THERAPY, MATCHING_TYPE_SET, MIN_DATE, interpreter)
+        HasHadTreatmentWithCategoryOfTypesRecently(TreatmentCategory.TARGETED_THERAPY, MATCHING_TYPE_SET, MIN_DATE)
     private val functionWithoutTypes =
-        HasHadTreatmentWithCategoryOfTypesRecently(TreatmentCategory.TARGETED_THERAPY, null, MIN_DATE, interpreter)
+        HasHadTreatmentWithCategoryOfTypesRecently(TreatmentCategory.TARGETED_THERAPY, null, MIN_DATE)
 
     @Test
     fun `Should fail for no treatments`() {
@@ -118,14 +114,12 @@ class HasHadTreatmentWithCategoryOfTypesRecentlyTest {
         val functionWithTypes = HasHadTreatmentWithCategoryOfTypesRecently(
             TreatmentCategory.TRANSPLANTATION,
             setOf(OtherTreatmentType.ALLOGENIC),
-            MIN_DATE,
-            interpreter
+            MIN_DATE
         )
         val functionWithoutTypes = HasHadTreatmentWithCategoryOfTypesRecently(
             TreatmentCategory.TRANSPLANTATION,
             null,
-            MIN_DATE,
-            interpreter
+            MIN_DATE
         )
         val treatmentHistoryEntry = treatmentHistoryEntry(
             setOf(treatment("", true, emptySet(), emptySet())),
@@ -141,8 +135,7 @@ class HasHadTreatmentWithCategoryOfTypesRecentlyTest {
         val function = HasHadTreatmentWithCategoryOfTypesRecently(
             TreatmentCategory.TRANSPLANTATION,
             setOf(OtherTreatmentType.ALLOGENIC),
-            MIN_DATE,
-            interpreter
+            MIN_DATE
         )
         val treatmentHistoryEntry = treatmentHistoryEntry(
             setOf(drugTreatment("transplantation", TreatmentCategory.TRANSPLANTATION, types = emptySet())),
@@ -172,22 +165,6 @@ class HasHadTreatmentWithCategoryOfTypesRecentlyTest {
             setOf(drugTreatment("test", MATCHING_CATEGORY, MATCHING_TYPE_SET)), startYear = MIN_DATE.year + 1
         )
         assertEvaluation(EvaluationResult.PASS, functionWithTypes.evaluate(withTreatmentHistoryEntry(treatmentHistoryEntry)))
-    }
-
-    @Test
-    fun `Should pass for recent correct treatment category with other type and medication with correct type`() {
-        val treatmentHistoryEntry = treatmentHistoryEntry(
-            setOf(treatment("", true, emptySet(), emptySet())),
-            isTrial = true, startYear = MIN_DATE.year + 1
-        )
-        val medication = WashoutTestFactory.medication(null, MIN_DATE.plusMonths(2)).copy(
-            drug = Drug(name = "", category = MATCHING_CATEGORY, drugTypes = MATCHING_TYPE_SET),
-            startDate = MIN_DATE.plusMonths(1)
-        )
-        assertBothFunctions(
-            EvaluationResult.PASS,
-            withTreatmentsAndMedications(listOf(treatmentHistoryEntry), listOf(medication))
-        )
     }
 
     private fun assertBothFunctions(result: EvaluationResult, record: PatientRecord) {

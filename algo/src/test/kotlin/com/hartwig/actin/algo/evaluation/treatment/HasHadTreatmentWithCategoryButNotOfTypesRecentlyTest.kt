@@ -1,15 +1,12 @@
 package com.hartwig.actin.algo.evaluation.treatment
 
 import com.hartwig.actin.algo.evaluation.EvaluationAssert.assertEvaluation
-import com.hartwig.actin.algo.evaluation.washout.WashoutTestFactory
-import com.hartwig.actin.datamodel.algo.EvaluationResult
+import com.hartwig.actin.algo.evaluation.EvaluationResult
 import com.hartwig.actin.datamodel.clinical.TreatmentTestFactory.drugTreatment
 import com.hartwig.actin.datamodel.clinical.TreatmentTestFactory.treatment
 import com.hartwig.actin.datamodel.clinical.TreatmentTestFactory.treatmentHistoryEntry
 import com.hartwig.actin.datamodel.clinical.TreatmentTestFactory.withTreatmentHistory
 import com.hartwig.actin.datamodel.clinical.TreatmentTestFactory.withTreatmentHistoryEntry
-import com.hartwig.actin.datamodel.clinical.TreatmentTestFactory.withTreatmentsAndMedications
-import com.hartwig.actin.datamodel.clinical.treatment.Drug
 import com.hartwig.actin.datamodel.clinical.treatment.DrugType
 import com.hartwig.actin.datamodel.clinical.treatment.OtherTreatmentType
 import com.hartwig.actin.datamodel.clinical.treatment.TreatmentCategory
@@ -23,9 +20,8 @@ private val MIN_DATE = LocalDate.of(2022, 4, 1)
 
 class HasHadTreatmentWithCategoryButNotOfTypesRecentlyTest {
 
-    private val interpreter = WashoutTestFactory.activeFromDate(MIN_DATE)
     private val function =
-        HasHadTreatmentWithCategoryButNotOfTypesRecently(TreatmentCategory.TARGETED_THERAPY, DRUG_TYPE_TO_IGNORE_SET, MIN_DATE, interpreter)
+        HasHadTreatmentWithCategoryButNotOfTypesRecently(TreatmentCategory.TARGETED_THERAPY, DRUG_TYPE_TO_IGNORE_SET, MIN_DATE)
 
     @Test
     fun `Should fail for no treatments`() {
@@ -74,8 +70,7 @@ class HasHadTreatmentWithCategoryButNotOfTypesRecentlyTest {
     fun `Should ignore trial matches and fail when looking for unlikely trial categories`() {
         val function =
             HasHadTreatmentWithCategoryButNotOfTypesRecently(
-                TreatmentCategory.TRANSPLANTATION, setOf(OtherTreatmentType.ALLOGENIC),
-                MIN_DATE, interpreter
+                TreatmentCategory.TRANSPLANTATION, setOf(OtherTreatmentType.ALLOGENIC), MIN_DATE
             )
         val treatmentHistoryEntry = treatmentHistoryEntry(
             setOf(treatment("test", true)), isTrial = true, startYear = MIN_DATE.year + 1
@@ -117,22 +112,6 @@ class HasHadTreatmentWithCategoryButNotOfTypesRecentlyTest {
             startYear = MIN_DATE.year + 1
         )
         assertEvaluation(EvaluationResult.PASS, function.evaluate(withTreatmentHistoryEntry(treatmentHistoryEntry)))
-    }
-
-    @Test
-    fun `Should pass for recent treatment history entry with correct treatment category and incorrect type but medication entry with correct type`() {
-        val treatmentHistoryEntry = treatmentHistoryEntry(
-            setOf(drugTreatment("test", MATCHING_CATEGORY, DRUG_TYPE_TO_IGNORE_SET)), startYear = MIN_DATE.year + 1
-        )
-        val medication = WashoutTestFactory.medication(null, MIN_DATE.plusDays(1)).copy(
-            drug = Drug(
-                name = "", category = MATCHING_CATEGORY, drugTypes = setOf(DrugType.ANTI_TISSUE_FACTOR)
-            )
-        )
-        assertEvaluation(
-            EvaluationResult.PASS,
-            function.evaluate(withTreatmentsAndMedications(listOf(treatmentHistoryEntry), listOf(medication)))
-        )
     }
 
     @Test

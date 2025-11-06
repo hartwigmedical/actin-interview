@@ -1,6 +1,6 @@
 package com.hartwig.actin.datamodel.clinical.treatment
 
-import com.hartwig.actin.Displayable
+import com.hartwig.actin.datamodel.Displayable
 
 interface Treatment : Displayable, Comparable<Treatment> {
     val name: String

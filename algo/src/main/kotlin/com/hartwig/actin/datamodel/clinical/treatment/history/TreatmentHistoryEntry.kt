@@ -1,8 +1,22 @@
 package com.hartwig.actin.datamodel.clinical.treatment.history
 
-import com.hartwig.actin.clinical.datamodel.treatment.Treatment
-import com.hartwig.actin.clinical.datamodel.treatment.TreatmentCategory
-import com.hartwig.actin.clinical.datamodel.treatment.TreatmentType
+import com.hartwig.actin.datamodel.clinical.treatment.Treatment
+import com.hartwig.actin.datamodel.clinical.treatment.TreatmentCategory
+import com.hartwig.actin.datamodel.clinical.treatment.TreatmentType
+import kotlin.collections.any
+import kotlin.collections.distinct
+import kotlin.collections.emptySet
+import kotlin.collections.filter
+import kotlin.collections.first
+import kotlin.collections.flatMap
+import kotlin.collections.joinToString
+import kotlin.collections.map
+import kotlin.collections.none
+import kotlin.collections.plus
+import kotlin.collections.sorted
+import kotlin.collections.toSet
+import kotlin.text.ifEmpty
+import kotlin.text.lowercase
 
 private const val DELIMITER = ";"
 
@@ -15,6 +29,14 @@ data class TreatmentHistoryEntry(
     val trialAcronym: String? = null,
     val treatmentHistoryDetails: TreatmentHistoryDetails? = null
 ) {
+
+    fun stopYear(): Int? {
+        return treatmentHistoryDetails?.stopYear ?: treatmentHistoryDetails?.maxStopYear
+    }
+
+    fun stopMonth(): Int? {
+        return treatmentHistoryDetails?.stopMonth ?: treatmentHistoryDetails?.maxStopMonth
+    }
 
     fun allTreatments(): Set<Treatment> {
         val switchToTreatments = treatmentHistoryDetails?.switchToTreatments?.map(TreatmentStage::treatment)?.toSet() ?: emptySet()
@@ -34,7 +56,11 @@ data class TreatmentHistoryEntry(
     }
 
     fun matchesTypeFromSet(types: Set<TreatmentType>): Boolean? {
-        return if (hasTypeConfigured()) isTypeFromCollection(types) else null
+        return when {
+            isTypeFromCollection(types) -> true
+            hasTypeConfigured() -> false
+            else -> null
+        }
     }
 
     fun hasTypeConfigured(): Boolean {

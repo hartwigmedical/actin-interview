@@ -4,9 +4,8 @@ import com.hartwig.actin.algo.evaluation.EvaluationFactory
 import com.hartwig.actin.algo.evaluation.EvaluationFunction
 import com.hartwig.actin.algo.evaluation.treatment.TreatmentHistoryEntryFunctions.portionOfTreatmentHistoryEntryMatchingPredicate
 import com.hartwig.actin.datamodel.PatientRecord
-import com.hartwig.actin.datamodel.algo.Evaluation
-import com.hartwig.actin.datamodel.algo.EvaluationMessage
-import com.hartwig.actin.datamodel.algo.EvaluationResult
+import com.hartwig.actin.algo.evaluation.Evaluation
+import com.hartwig.actin.algo.evaluation.EvaluationResult
 import com.hartwig.actin.datamodel.clinical.treatment.Treatment
 import com.hartwig.actin.datamodel.clinical.treatment.history.TreatmentHistoryEntry
 
@@ -109,8 +108,8 @@ class HasHadCombinedTreatmentNamesWithCycles(
 
         private fun getMessagesForEvaluations(
             evaluations: List<Evaluation>,
-            messageExtractor: (Evaluation) -> Set<EvaluationMessage>
-        ): Set<EvaluationMessage> {
+            messageExtractor: (Evaluation) -> Set<String>
+        ): Set<String> {
             return evaluations.flatMap(messageExtractor).toSet()
         }
     }

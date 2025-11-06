@@ -1,6 +1,6 @@
 package com.hartwig.actin.datamodel.clinical
 
-import com.hartwig.actin.Displayable
+import com.hartwig.actin.datamodel.Displayable
 
 enum class LabUnit(private val display: String) : Displayable {
     NANOGRAMS_PER_LITER("ng/L"),

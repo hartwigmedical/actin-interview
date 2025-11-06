@@ -3,7 +3,6 @@ package com.hartwig.actin.algo.evaluation.util
 import com.hartwig.actin.datamodel.clinical.LabMeasurement
 import com.hartwig.actin.datamodel.Displayable
 import com.hartwig.actin.datamodel.clinical.LabUnit
-import com.hartwig.actin.util.ApplicationConfig
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.time.LocalDate
@@ -16,7 +15,7 @@ object Format {
     private const val SEPARATOR_OR = " or "
     private const val SEPARATOR_COMMA = ", "
     private val DATE_FORMAT: DateTimeFormatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy")
-    private val PERCENTAGE_FORMAT: DecimalFormat = DecimalFormat("#'%'", DecimalFormatSymbols.getInstance(ApplicationConfig.LOCALE))
+    private val PERCENTAGE_FORMAT: DecimalFormat = DecimalFormat("#'%'", DecimalFormatSymbols.getInstance(Locale.getDefault()))
 
     fun concat(strings: Iterable<String>) = concatWithCommaAndSeparator(strings, SEPARATOR_AND, toLowercase = false)
 

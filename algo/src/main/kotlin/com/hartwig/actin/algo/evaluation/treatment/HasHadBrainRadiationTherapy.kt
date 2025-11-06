@@ -4,7 +4,7 @@ import com.hartwig.actin.algo.evaluation.EvaluationFactory
 import com.hartwig.actin.algo.evaluation.EvaluationFunction
 import com.hartwig.actin.algo.evaluation.util.ValueComparison.stringCaseInsensitivelyMatchesQueryCollection
 import com.hartwig.actin.datamodel.PatientRecord
-import com.hartwig.actin.datamodel.algo.Evaluation
+import com.hartwig.actin.algo.evaluation.Evaluation
 import com.hartwig.actin.datamodel.clinical.BodyLocationCategory
 import com.hartwig.actin.datamodel.clinical.treatment.TreatmentCategory
 import com.hartwig.actin.datamodel.clinical.treatment.history.TreatmentHistoryEntry
@@ -13,8 +13,7 @@ class HasHadBrainRadiationTherapy : EvaluationFunction {
 
     override fun evaluate(record: PatientRecord): Evaluation {
         val tumorDetails = record.tumor
-        val hasConfirmedBrainOrCNSMetastases = tumorDetails.hasConfirmedBrainLesions() || tumorDetails.hasConfirmedCnsLesions()
-        val hasSuspectedBrainOrCNSMetastases = tumorDetails.hasSuspectedBrainLesions == true || tumorDetails.hasSuspectedCnsLesions == true
+        val hasConfirmedBrainOrCNSMetastases = tumorDetails.hasBrainLesions == true || tumorDetails.hasCnsLesions == true
         val priorRadiotherapies = record.oncologicalHistory.filter { it.categories().contains(TreatmentCategory.RADIOTHERAPY) }
         val anyRadiotherapy = priorRadiotherapies.isNotEmpty()
         val brainRadiotherapy = hasHadBrainRadiotherapy(priorRadiotherapies)
@@ -24,9 +23,8 @@ class HasHadBrainRadiationTherapy : EvaluationFunction {
 
             brainRadiotherapy == false && anyRadiotherapy -> EvaluationFactory.fail("Has received radiotherapy but not to the brain")
 
-            (hasConfirmedBrainOrCNSMetastases || hasSuspectedBrainOrCNSMetastases) && anyRadiotherapy -> {
-                val suspectedMessage = if (!hasConfirmedBrainOrCNSMetastases) " suspected" else ""
-                EvaluationFactory.undetermined("Has$suspectedMessage brain and/or CNS metastases and received radiotherapy " +
+            (hasConfirmedBrainOrCNSMetastases) && anyRadiotherapy -> {
+                EvaluationFactory.undetermined("Has brain and/or CNS metastases and received radiotherapy " +
                         "- undetermined if brain radiation therapy")
             }
 

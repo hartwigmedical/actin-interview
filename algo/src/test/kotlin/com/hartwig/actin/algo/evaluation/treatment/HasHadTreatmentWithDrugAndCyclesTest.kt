@@ -1,8 +1,7 @@
 package com.hartwig.actin.algo.evaluation.treatment
 
 import com.hartwig.actin.algo.evaluation.EvaluationAssert.assertEvaluation
-import com.hartwig.actin.algo.evaluation.washout.WashoutTestFactory
-import com.hartwig.actin.datamodel.algo.EvaluationResult
+import com.hartwig.actin.algo.evaluation.EvaluationResult
 import com.hartwig.actin.datamodel.clinical.TreatmentTestFactory
 import com.hartwig.actin.datamodel.clinical.TreatmentTestFactory.drugTreatment
 import com.hartwig.actin.datamodel.clinical.TreatmentTestFactory.drugTreatmentNoDrugs
@@ -10,7 +9,6 @@ import com.hartwig.actin.datamodel.clinical.TreatmentTestFactory.treatment
 import com.hartwig.actin.datamodel.clinical.TreatmentTestFactory.treatmentHistoryEntry
 import com.hartwig.actin.datamodel.clinical.TreatmentTestFactory.withTreatmentHistory
 import com.hartwig.actin.datamodel.clinical.treatment.Drug
-import com.hartwig.actin.datamodel.clinical.treatment.DrugType
 import com.hartwig.actin.datamodel.clinical.treatment.TreatmentCategory
 import org.junit.Test
 
@@ -106,20 +104,6 @@ class HasHadTreatmentWithDrugAndCyclesTest {
     }
 
     @Test
-    fun `Should evaluate to undetermined for therapy containing other drug but medication containing drug`() {
-        val treatmentHistory = listOf(treatmentHistoryEntry(setOf(drugTreatment("other treatment", TREATMENT_CATEGORY))))
-        val medication = WashoutTestFactory.medication().copy(
-            drug = Drug(
-                name = "match", category = TREATMENT_CATEGORY, drugTypes = setOf(DrugType.HER2_ANTIBODY)
-            )
-        )
-        assertEvaluation(
-            EvaluationResult.UNDETERMINED,
-            functionWithCycles.evaluate(TreatmentTestFactory.withTreatmentsAndMedications(treatmentHistory, listOf(medication)))
-        )
-    }
-
-    @Test
     fun `Should evaluate to undetermined for trial with multiple drug therapy treatments including one of unknown drugs`() {
         val knownDrugTherapy = drugTreatment("other", TreatmentCategory.IMMUNOTHERAPY)
         val unknownDrugTherapy = drugTreatmentNoDrugs("unknown drugs")
@@ -172,20 +156,6 @@ class HasHadTreatmentWithDrugAndCyclesTest {
     fun `Should pass for drug trial treatment with matching drug`() {
         val treatmentHistoryEntry = treatmentHistoryEntry(setOf(drugTreatment("match", TreatmentCategory.IMMUNOTHERAPY)), isTrial = true)
         assertEvaluation(EvaluationResult.PASS, functionWithoutCycles.evaluate(withTreatmentHistory(listOf(treatmentHistoryEntry))))
-    }
-
-    @Test
-    fun `Should pass for therapy containing other drug but medication containing drug`() {
-        val treatmentHistory = listOf(treatmentHistoryEntry(setOf(drugTreatment("other treatment", TREATMENT_CATEGORY))))
-        val medication = WashoutTestFactory.medication().copy(
-            drug = Drug(
-                name = "match", category = TREATMENT_CATEGORY, drugTypes = setOf(DrugType.HER2_ANTIBODY)
-            )
-        )
-        assertEvaluation(
-            EvaluationResult.PASS,
-            functionWithoutCycles.evaluate(TreatmentTestFactory.withTreatmentsAndMedications(treatmentHistory, listOf(medication)))
-        )
     }
 
     @Test

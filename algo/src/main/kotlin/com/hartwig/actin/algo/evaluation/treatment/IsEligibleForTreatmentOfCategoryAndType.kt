@@ -4,7 +4,7 @@ import com.hartwig.actin.algo.evaluation.EvaluationFactory
 import com.hartwig.actin.algo.evaluation.EvaluationFunction
 import com.hartwig.actin.algo.evaluation.util.Format
 import com.hartwig.actin.datamodel.PatientRecord
-import com.hartwig.actin.datamodel.algo.Evaluation
+import com.hartwig.actin.algo.evaluation.Evaluation
 import com.hartwig.actin.datamodel.clinical.treatment.TreatmentCategory
 import com.hartwig.actin.datamodel.clinical.treatment.TreatmentType
 
@@ -27,7 +27,7 @@ class IsEligibleForTreatmentOfCategoryAndType(
             }
 
             else -> {
-                EvaluationFactory.recoverableUndetermined(
+                EvaluationFactory.undetermined(
                     "Undetermined if patient is eligible for treatment of category ${category.display()} " +
                             "and type(s) ${Format.concatItemsWithOr(types)}"
                 )
