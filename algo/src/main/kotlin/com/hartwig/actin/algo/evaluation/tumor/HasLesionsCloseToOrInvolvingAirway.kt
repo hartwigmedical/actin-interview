@@ -1,11 +1,12 @@
 package com.hartwig.actin.algo.evaluation.tumor
 
-import com.hartwig.actin.algo.doid.DoidConstants
 import com.hartwig.actin.algo.evaluation.EvaluationFactory
 import com.hartwig.actin.algo.evaluation.EvaluationFunction
-import com.hartwig.actin.algo.evaluation.tumor.DoidEvaluationFunctions.isOfAtLeastOneDoidType
 import com.hartwig.actin.datamodel.PatientRecord
-import com.hartwig.actin.datamodel.algo.Evaluation
+import com.hartwig.actin.algo.evaluation.Evaluation
+import com.hartwig.actin.doid.DoidConstants
+import com.hartwig.actin.doid.DoidEvaluationFunctions
+import com.hartwig.actin.doid.DoidEvaluationFunctions.isOfAtLeastOneDoidType
 import com.hartwig.actin.doid.DoidModel
 
 class HasLesionsCloseToOrInvolvingAirway(private val doidModel: DoidModel) : EvaluationFunction {
@@ -15,16 +16,15 @@ class HasLesionsCloseToOrInvolvingAirway(private val doidModel: DoidModel) : Eva
         val isLungCancer = DoidEvaluationFunctions.isOfDoidType(doidModel, record.tumor.doids, DoidConstants.LUNG_CANCER_DOID)
 
         with(record.tumor) {
-            val noLesionsCloseToAirway =
-                !isMajorAirwayCancer && otherLesions.isNullOrEmpty() && otherSuspectedLesions.isNullOrEmpty() && hasLungLesions == false
+            val noLesionsCloseToAirway = !isMajorAirwayCancer && otherLesions.isNullOrEmpty() && hasLungLesions == false
 
             return when {
                 isMajorAirwayCancer -> {
                     EvaluationFactory.pass("Has lesions close to or involving airway")
                 }
 
-                isLungCancer || hasLungLesions == true || hasSuspectedLungLesions == true -> {
-                    val message = if (hasLungLesions != true && hasSuspectedLungLesions == true) {
+                isLungCancer || hasLungLesions == true -> {
+                    val message = if (hasLungLesions != true) {
                         "Suspected lung"
                     } else "Lung"
 

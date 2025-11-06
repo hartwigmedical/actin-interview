@@ -36,7 +36,7 @@ class HasKnownBrainMetastasesTest {
     fun `Should warn when only suspected brain lesions present`() {
         assertEvaluation(
             EvaluationResult.WARN,
-            function.evaluate(TumorTestFactory.withBrainLesions(hasBrainLesions = false, hasSuspectedBrainLesions = true))
+            function.evaluate(TumorTestFactory.withBrainLesions(hasBrainLesions = false))
         )
     }
 }

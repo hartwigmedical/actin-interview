@@ -3,8 +3,8 @@ package com.hartwig.actin.algo.evaluation.tumor
 import com.hartwig.actin.algo.evaluation.EvaluationFactory
 import com.hartwig.actin.algo.evaluation.EvaluationFunction
 import com.hartwig.actin.datamodel.PatientRecord
-import com.hartwig.actin.datamodel.algo.Evaluation
-import com.hartwig.actin.datamodel.algo.EvaluationResult
+import com.hartwig.actin.algo.evaluation.Evaluation
+import com.hartwig.actin.algo.evaluation.EvaluationResult
 import com.hartwig.actin.datamodel.clinical.TumorStage
 
 internal class DerivedTumorStageEvaluationFunction(private val originalFunction: EvaluationFunction, private val messageEnd: String) :
@@ -63,9 +63,9 @@ internal class DerivedTumorStageEvaluationFunction(private val originalFunction:
 
                 EvaluationResult.FAIL -> DerivedTumorStageEvaluation.create(derived, EvaluationFactory::fail)
 
-                EvaluationResult.NOT_EVALUATED -> DerivedTumorStageEvaluation.create(derived, EvaluationFactory::notEvaluated)
-
-                else -> throw IllegalArgumentException()
+                EvaluationResult.NOT_EVALUATED -> DerivedTumorStageEvaluation.create(derived) {
+                    Evaluation(EvaluationResult.NOT_EVALUATED, recoverable = false, passMessages = setOf(it))
+                }
             }
         }
     }

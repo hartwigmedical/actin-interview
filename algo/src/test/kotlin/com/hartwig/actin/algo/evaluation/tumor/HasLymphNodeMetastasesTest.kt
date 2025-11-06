@@ -10,7 +10,7 @@ class HasLymphNodeMetastasesTest {
 
     @Test
     fun `Should be undetermined when unknown if has lymph node lesions`() {
-        val undetermined = function.evaluate(TumorTestFactory.withLymphNodeLesions(null, null))
+        val undetermined = function.evaluate(TumorTestFactory.withLymphNodeLesions(null))
         assertEvaluation(EvaluationResult.UNDETERMINED, undetermined)
         assertThat(undetermined.undeterminedMessagesStrings()).contains("Undetermined if patient has lymph node metastases (missing lesion data)")
     }
@@ -31,7 +31,7 @@ class HasLymphNodeMetastasesTest {
 
     @Test
     fun `Should warn when has suspected lymph node lesions only`() {
-        val warn = function.evaluate(TumorTestFactory.withLymphNodeLesions(false, true))
+        val warn = function.evaluate(TumorTestFactory.withLymphNodeLesions(false))
         val message = "Has suspected lymph node metastases and not yet confirmed"
         assertEvaluation(EvaluationResult.WARN, warn)
         listOf(warn.warnMessagesStrings()).forEach {
@@ -41,14 +41,14 @@ class HasLymphNodeMetastasesTest {
 
     @Test
     fun `Should be undetermined when no suspected lymph node lesions but unknown certain lymph node lesions`() {
-        val undetermined = function.evaluate(TumorTestFactory.withLymphNodeLesions(null, false))
+        val undetermined = function.evaluate(TumorTestFactory.withLymphNodeLesions(null))
         assertEvaluation(EvaluationResult.UNDETERMINED, undetermined)
         assertThat(undetermined.undeterminedMessagesStrings()).contains("Undetermined if patient has lymph node metastases (missing lesion data)")
     }
 
     @Test
     fun `Should pass when has lymph node lesions is true and no suspected lymph node lesions`() {
-        val pass = function.evaluate(TumorTestFactory.withLymphNodeLesions(true, false))
+        val pass = function.evaluate(TumorTestFactory.withLymphNodeLesions(true))
         assertEvaluation(EvaluationResult.PASS, pass)
         assertThat(pass.passMessagesStrings()).contains("Has lymph node metastases")
     }

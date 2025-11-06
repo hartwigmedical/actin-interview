@@ -1,6 +1,6 @@
 package com.hartwig.actin.algo.evaluation.tumor
 
-import com.hartwig.actin.datamodel.algo.Evaluation
+import com.hartwig.actin.algo.evaluation.Evaluation
 import com.hartwig.actin.datamodel.clinical.TumorStage
 
 internal object DerivedTumorStageEvaluation {

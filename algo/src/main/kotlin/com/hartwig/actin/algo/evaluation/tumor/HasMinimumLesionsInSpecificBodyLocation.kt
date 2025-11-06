@@ -3,7 +3,7 @@ package com.hartwig.actin.algo.evaluation.tumor
 import com.hartwig.actin.algo.evaluation.EvaluationFactory
 import com.hartwig.actin.algo.evaluation.EvaluationFunction
 import com.hartwig.actin.datamodel.PatientRecord
-import com.hartwig.actin.datamodel.algo.Evaluation
+import com.hartwig.actin.algo.evaluation.Evaluation
 import com.hartwig.actin.datamodel.clinical.BodyLocationCategory
 
 class HasMinimumLesionsInSpecificBodyLocation(
@@ -13,14 +13,14 @@ class HasMinimumLesionsInSpecificBodyLocation(
     override fun evaluate(record: PatientRecord): Evaluation {
         val messageEnding = "at least $minLesions lesions in ${bodyLocation.display()}"
 
-        val (hasLesions, hasSuspectedLesions) = with(record.tumor) {
+        val hasLesions = with(record.tumor) {
             when (bodyLocation) {
-                BodyLocationCategory.BONE -> Pair(hasBoneLesions, hasSuspectedBoneLesions)
-                BodyLocationCategory.BRAIN -> Pair(hasBrainLesions, hasSuspectedBrainLesions)
-                BodyLocationCategory.CNS -> Pair(hasCnsLesions, hasSuspectedCnsLesions)
-                BodyLocationCategory.LIVER -> Pair(hasLiverLesions, hasSuspectedLiverLesions)
-                BodyLocationCategory.LUNG -> Pair(hasLungLesions, hasSuspectedLungLesions)
-                BodyLocationCategory.LYMPH_NODE -> Pair(hasLymphNodeLesions, hasSuspectedLymphNodeLesions)
+                BodyLocationCategory.BONE -> hasBoneLesions
+                BodyLocationCategory.BRAIN -> hasBrainLesions
+                BodyLocationCategory.CNS -> hasCnsLesions
+                BodyLocationCategory.LIVER -> hasLiverLesions
+                BodyLocationCategory.LUNG -> hasLungLesions
+                BodyLocationCategory.LYMPH_NODE -> hasLymphNodeLesions
                 else -> return EvaluationFactory.undetermined("Undetermined if patient has $messageEnding")
             }
         }
@@ -30,7 +30,7 @@ class HasMinimumLesionsInSpecificBodyLocation(
                 EvaluationFactory.pass("Patient has $messageEnding")
             }
 
-            hasLesions != false || hasSuspectedLesions == true -> {
+            hasLesions != false -> {
                 EvaluationFactory.undetermined("Undetermined if patient has $messageEnding")
             }
 

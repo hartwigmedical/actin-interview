@@ -3,17 +3,17 @@ package com.hartwig.actin.algo.evaluation.tumor
 import com.hartwig.actin.algo.evaluation.EvaluationFactory
 import com.hartwig.actin.algo.evaluation.EvaluationFunction
 import com.hartwig.actin.datamodel.PatientRecord
-import com.hartwig.actin.datamodel.algo.Evaluation
+import com.hartwig.actin.algo.evaluation.Evaluation
 
 class HasMeasurableDisease : EvaluationFunction {
 
     override fun evaluate(record: PatientRecord): Evaluation {
         val hasMeasurableDisease = record.tumor.hasMeasurableDisease
-            ?: return EvaluationFactory.recoverableUndetermined("Measurable disease undetermined (data missing)")
+            ?: return EvaluationFactory.undetermined("Measurable disease undetermined (data missing)")
         return if (hasMeasurableDisease) {
-            EvaluationFactory.recoverablePass("Has measurable disease")
+            EvaluationFactory.pass("Has measurable disease")
         } else {
-            EvaluationFactory.recoverableFail("No measurable disease")
+            EvaluationFactory.fail("No measurable disease")
         }
     }
 }

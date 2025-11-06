@@ -3,7 +3,7 @@ package com.hartwig.actin.algo.evaluation.tumor
 import com.hartwig.actin.algo.evaluation.EvaluationFactory
 import com.hartwig.actin.algo.evaluation.EvaluationFunction
 import com.hartwig.actin.datamodel.PatientRecord
-import com.hartwig.actin.datamodel.algo.Evaluation
+import com.hartwig.actin.algo.evaluation.Evaluation
 
 class HasKnownCnsMetastases : EvaluationFunction {
 
@@ -17,11 +17,6 @@ class HasKnownCnsMetastases : EvaluationFunction {
 
                 hasBrainLesions == true -> {
                     EvaluationFactory.pass("Has brain metastases")
-                }
-
-                hasSuspectedCnsLesions == true || hasSuspectedBrainLesions == true -> {
-                    val message = "CNS metastases present but suspected lesions only"
-                    EvaluationFactory.warn(message)
                 }
 
                 hasCnsLesions == null || hasBrainLesions == null -> {

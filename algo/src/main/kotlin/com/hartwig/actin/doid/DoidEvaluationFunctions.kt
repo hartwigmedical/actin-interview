@@ -1,15 +1,7 @@
 package com.hartwig.actin.doid
 
 import com.hartwig.actin.algo.evaluation.EvaluationResult
-import com.hartwig.actin.algo.evaluation.util.ValueComparison.stringCaseInsensitivelyMatchesQueryCollection
-import kotlin.collections.any
-import kotlin.collections.flatMap
-import kotlin.collections.intersect
-import kotlin.collections.isNotEmpty
-import kotlin.collections.isNullOrEmpty
-import kotlin.collections.map
-import kotlin.collections.reduce
-import kotlin.collections.toSet
+import com.hartwig.actin.algo.evaluation.util.ValueComparison
 
 object DoidEvaluationFunctions {
 
@@ -31,7 +23,7 @@ object DoidEvaluationFunctions {
             if (term == null) {
                 false
             } else {
-                stringCaseInsensitivelyMatchesQueryCollection(term, doidTermsToMatch)
+                ValueComparison.stringCaseInsensitivelyMatchesQueryCollection(term, doidTermsToMatch)
             }
         }
     }

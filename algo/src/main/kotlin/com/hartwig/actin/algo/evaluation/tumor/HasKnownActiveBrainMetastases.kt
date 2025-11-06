@@ -3,19 +3,18 @@ package com.hartwig.actin.algo.evaluation.tumor
 import com.hartwig.actin.algo.evaluation.EvaluationFactory
 import com.hartwig.actin.algo.evaluation.EvaluationFunction
 import com.hartwig.actin.datamodel.PatientRecord
-import com.hartwig.actin.datamodel.algo.Evaluation
+import com.hartwig.actin.algo.evaluation.Evaluation
 
 class HasKnownActiveBrainMetastases : EvaluationFunction {
 
     override fun evaluate(record: PatientRecord): Evaluation {
         with(record.tumor) {
-            listOf(hasBrainLesions, hasActiveBrainLesions, hasSuspectedBrainLesions)
-
             val unknownIfActive = hasActiveBrainLesions == null
 
             return when {
-                unknownIfActive && hasBrainLesions == true -> undeterminedActivityEvaluation("Brain")
-                unknownIfActive && hasSuspectedBrainLesions == true -> undeterminedActivityEvaluation("Suspected brain")
+                unknownIfActive && hasBrainLesions == true -> {
+                    EvaluationFactory.undetermined("Brain metastases present but unknown if active (data missing)")
+                }
 
                 unknownIfActive && hasBrainLesions == null -> {
                     EvaluationFactory.undetermined("Undetermined if active brain metastases present (brain lesions data missing)")
@@ -28,7 +27,4 @@ class HasKnownActiveBrainMetastases : EvaluationFunction {
         }
     }
 
-    private fun undeterminedActivityEvaluation(prefix: String): Evaluation {
-        return EvaluationFactory.undetermined("$prefix metastases present but unknown if active (data missing)")
-    }
 }

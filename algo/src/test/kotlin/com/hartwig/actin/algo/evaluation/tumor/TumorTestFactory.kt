@@ -1,13 +1,13 @@
 package com.hartwig.actin.algo.evaluation.tumor
 
+import com.hartwig.actin.algo.evaluation.molecular.TestMolecularFactory
 import com.hartwig.actin.datamodel.PatientRecord
 import com.hartwig.actin.datamodel.TestPatientFactory
-import com.hartwig.actin.datamodel.clinical.IhcTest
 import com.hartwig.actin.datamodel.clinical.TumorDetails
 import com.hartwig.actin.datamodel.clinical.TumorStage
+import com.hartwig.actin.datamodel.clinical.treatment.IhcTest
 import com.hartwig.actin.datamodel.clinical.treatment.history.TreatmentHistoryEntry
 import com.hartwig.actin.datamodel.molecular.ExperimentType
-import com.hartwig.actin.datamodel.molecular.TestMolecularFactory
 import com.hartwig.actin.datamodel.molecular.driver.CopyNumberType
 import com.hartwig.actin.datamodel.molecular.driver.GeneRole
 import com.hartwig.actin.datamodel.molecular.driver.ProteinEffect
@@ -110,44 +110,14 @@ internal object TumorTestFactory {
         return withTumorDetails(TumorDetails(hasMeasurableDisease = hasMeasurableDisease, doids = setOf(doid)))
     }
 
-    fun withConfirmedLesions(
-        hasBoneLesions: Boolean? = null,
-        hasBrainLesions: Boolean? = null,
-        hasCnsLesions: Boolean? = null,
-        hasLiverLesions: Boolean? = null,
-        hasLungLesions: Boolean? = null,
-        hasLymphNodeLesions: Boolean? = null,
-        otherLesions: List<String>? = null
-    ): PatientRecord {
-        return withTumorDetails(
-            TumorDetails(
-                hasBoneLesions = hasBoneLesions,
-                hasBrainLesions = hasBrainLesions,
-                hasCnsLesions = hasCnsLesions,
-                hasLiverLesions = hasLiverLesions,
-                hasLungLesions = hasLungLesions,
-                hasLymphNodeLesions = hasLymphNodeLesions,
-                otherLesions = otherLesions
-            )
-        )
-    }
-
-    fun withOtherSuspectedLesions(suspectedLesions: List<String>?): PatientRecord {
-        return withTumorDetails(TumorDetails(otherSuspectedLesions = suspectedLesions))
-    }
-
     fun withBrainAndCnsLesions(
         hasBrainLesions: Boolean?,
-        hasCnsLesions: Boolean?,
-        hasSuspectedBrainLesions: Boolean? = false,
-        hasSuspectedCnsLesions: Boolean? = false
+        hasCnsLesions: Boolean?
     ): PatientRecord {
         return withTumorDetails(
             TumorDetails(
                 hasBrainLesions = hasBrainLesions,
-                hasCnsLesions = hasCnsLesions,
-                hasSuspectedBrainLesions = hasSuspectedBrainLesions,
-                hasSuspectedCnsLesions = hasSuspectedCnsLesions
+                hasCnsLesions = hasCnsLesions
             )
         )
     }
@@ -156,36 +126,30 @@ internal object TumorTestFactory {
         hasBrainLesions: Boolean?,
         hasActiveBrainLesions: Boolean?,
         hasCnsLesions: Boolean?,
-        hasActiveCnsLesions: Boolean?,
-        hasSuspectedBrainLesions: Boolean? = false,
-        hasSuspectedCnsLesions: Boolean? = false
+        hasActiveCnsLesions: Boolean?
     ): PatientRecord {
         return withTumorDetails(
             TumorDetails(
                 hasBrainLesions = hasBrainLesions,
                 hasActiveBrainLesions = hasActiveBrainLesions,
                 hasCnsLesions = hasCnsLesions,
-                hasActiveCnsLesions = hasActiveCnsLesions,
-                hasSuspectedBrainLesions = hasSuspectedBrainLesions,
-                hasSuspectedCnsLesions = hasSuspectedCnsLesions
+                hasActiveCnsLesions = hasActiveCnsLesions
             )
         )
     }
 
-    fun withBrainLesions(hasBrainLesions: Boolean?, hasSuspectedBrainLesions: Boolean? = false): PatientRecord {
-        return withTumorDetails(TumorDetails(hasBrainLesions = hasBrainLesions, hasSuspectedBrainLesions = hasSuspectedBrainLesions))
+    fun withBrainLesions(hasBrainLesions: Boolean?): PatientRecord {
+        return withTumorDetails(TumorDetails(hasBrainLesions = hasBrainLesions))
     }
 
     fun withBrainLesionStatus(
         hasBrainLesions: Boolean?,
-        hasActiveBrainLesions: Boolean?,
-        hasSuspectedBrainLesions: Boolean? = false
+        hasActiveBrainLesions: Boolean?
     ): PatientRecord {
         return withTumorDetails(
             TumorDetails(
                 hasBrainLesions = hasBrainLesions,
                 hasActiveBrainLesions = hasActiveBrainLesions,
-                hasSuspectedBrainLesions = hasSuspectedBrainLesions
             )
         )
     }
@@ -204,26 +168,6 @@ internal object TumorTestFactory {
         )
     }
 
-    fun withSuspectedCnsOrBrainLesionsAndOncologicalHistory(
-        hasSuspectedCnsLesions: Boolean?,
-        hasSuspectedBrainLesions: Boolean?,
-        oncologicalHistoryEntry: TreatmentHistoryEntry
-    ): PatientRecord {
-        return base.copy(
-            oncologicalHistory = listOf(oncologicalHistoryEntry),
-            tumor = TumorDetails(
-                hasCnsLesions = false,
-                hasBrainLesions = false,
-                hasSuspectedCnsLesions = hasSuspectedCnsLesions,
-                hasSuspectedBrainLesions = hasSuspectedBrainLesions
-            )
-        )
-    }
-
-    fun withCnsLesions(hasCnsLesions: Boolean?): PatientRecord {
-        return withTumorDetails(TumorDetails(hasCnsLesions = hasCnsLesions))
-    }
-
     fun withBoneLesions(hasBoneLesions: Boolean?): PatientRecord {
         return withTumorDetails(TumorDetails(hasBoneLesions = hasBoneLesions))
     }
@@ -232,28 +176,8 @@ internal object TumorTestFactory {
         return withTumorDetails(TumorDetails(hasBoneLesions = hasBoneLesions, hasLiverLesions = hasLiverLesions))
     }
 
-    fun withBoneAndSuspectedLiverLesions(hasBoneLesions: Boolean?, hasSuspectedLiverLesions: Boolean?): PatientRecord {
-        return withTumorDetails(
-            TumorDetails(
-                hasBoneLesions = hasBoneLesions,
-                hasLiverLesions = false,
-                hasSuspectedLiverLesions = hasSuspectedLiverLesions
-            )
-        )
-    }
-
     fun withBoneAndOtherLesions(hasBoneLesions: Boolean?, otherLesions: List<String>): PatientRecord {
         return withTumorDetails(TumorDetails(hasBoneLesions = hasBoneLesions, otherLesions = otherLesions))
-    }
-
-    fun withSuspectedBoneAndOtherLesions(hasSuspectedBoneLesions: Boolean?, otherLesions: List<String>?): PatientRecord {
-        return withTumorDetails(
-            TumorDetails(
-                hasBoneLesions = false,
-                hasSuspectedBoneLesions = hasSuspectedBoneLesions,
-                otherLesions = otherLesions
-            )
-        )
     }
 
     fun withLiverAndOtherLesions(hasLiverLesions: Boolean?, otherLesions: List<String>): PatientRecord {
@@ -264,21 +188,15 @@ internal object TumorTestFactory {
         return withTumorDetails(TumorDetails(hasLiverLesions = hasLiverLesions))
     }
 
-    fun withLungLesions(hasLungLesions: Boolean?, hasSuspectedLungLesions: Boolean? = false): PatientRecord {
+    fun withLungLesions(hasLungLesions: Boolean?): PatientRecord {
         return withTumorDetails(
-            TumorDetails(
-                hasLungLesions = hasLungLesions,
-                hasSuspectedLungLesions = hasSuspectedLungLesions
-            )
+            TumorDetails(hasLungLesions = hasLungLesions)
         )
     }
 
-    fun withLymphNodeLesions(hasLymphNodeLesions: Boolean?, hasSuspectedLymphNodeLesions: Boolean? = null): PatientRecord {
+    fun withLymphNodeLesions(hasLymphNodeLesions: Boolean?): PatientRecord {
         return withTumorDetails(
-            TumorDetails(
-                hasLymphNodeLesions = hasLymphNodeLesions,
-                hasSuspectedLymphNodeLesions = hasSuspectedLymphNodeLesions
-            )
+            TumorDetails(hasLymphNodeLesions = hasLymphNodeLesions)
         )
     }
 

@@ -3,7 +3,7 @@ package com.hartwig.actin.algo.evaluation.tumor
 import com.hartwig.actin.algo.evaluation.EvaluationFactory
 import com.hartwig.actin.algo.evaluation.EvaluationFunction
 import com.hartwig.actin.datamodel.PatientRecord
-import com.hartwig.actin.datamodel.algo.Evaluation
+import com.hartwig.actin.algo.evaluation.Evaluation
 
 class HasKnownActiveCnsMetastases : EvaluationFunction {
 
@@ -15,10 +15,6 @@ class HasKnownActiveCnsMetastases : EvaluationFunction {
             return when {
                 unknownIfActive && (hasCnsLesions == true || hasBrainLesions == true) -> {
                     EvaluationFactory.undetermined(undeterminedMessage)
-                }
-
-                unknownIfActive && (hasSuspectedCnsLesions == true || hasSuspectedBrainLesions == true) -> {
-                    EvaluationFactory.undetermined("Suspected $undeterminedMessage")
                 }
 
                 unknownIfActive && (hasCnsLesions == null && hasBrainLesions == null) -> {

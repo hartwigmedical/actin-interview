@@ -63,19 +63,6 @@ class HasHadBrainRadiationTherapyTest {
     }
 
     @Test
-    fun `Should evaluate to undetermined if radiotherapy and suspected brain metastases in history but radiotherapy location unknown`() {
-        val history =
-            TumorTestFactory.withSuspectedCnsOrBrainLesionsAndOncologicalHistory(
-                hasSuspectedCnsLesions = null, hasSuspectedBrainLesions = true,
-                TreatmentTestFactory.treatmentHistoryEntry(treatments = radiotherapy, bodyLocationCategory = null)
-            )
-        EvaluationAssert.assertEvaluation(
-            EvaluationResult.UNDETERMINED,
-            HasHadBrainRadiationTherapy().evaluate(history)
-        )
-    }
-
-    @Test
     fun `Should fail if no radiotherapy in history`() {
         val treatment = setOf(treatment("Chemotherapy", isSystemic = true, categories = setOf(TreatmentCategory.CHEMOTHERAPY)))
         val history =

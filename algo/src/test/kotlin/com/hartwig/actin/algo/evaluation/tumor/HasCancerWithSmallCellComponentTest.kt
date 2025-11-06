@@ -1,9 +1,9 @@
 package com.hartwig.actin.algo.evaluation.tumor
 
-import com.hartwig.actin.algo.doid.DoidConstants
+import com.hartwig.actin.doid.DoidConstants
 import com.hartwig.actin.algo.evaluation.EvaluationAssert.assertEvaluation
 import com.hartwig.actin.algo.evaluation.EvaluationResult
-import com.hartwig.actin.datamodel.clinical.IhcTest
+import com.hartwig.actin.datamodel.clinical.treatment.IhcTest
 import com.hartwig.actin.doid.TestDoidModelFactory
 import org.junit.Test
 

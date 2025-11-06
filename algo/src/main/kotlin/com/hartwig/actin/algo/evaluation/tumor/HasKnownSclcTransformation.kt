@@ -1,12 +1,13 @@
 package com.hartwig.actin.algo.evaluation.tumor
 
-import com.hartwig.actin.algo.doid.DoidConstants
 import com.hartwig.actin.algo.evaluation.EvaluationFactory
 import com.hartwig.actin.algo.evaluation.EvaluationFunction
 import com.hartwig.actin.algo.evaluation.IhcTestEvaluation
 import com.hartwig.actin.algo.evaluation.molecular.MolecularRuleEvaluator
 import com.hartwig.actin.datamodel.PatientRecord
-import com.hartwig.actin.datamodel.algo.Evaluation
+import com.hartwig.actin.algo.evaluation.Evaluation
+import com.hartwig.actin.doid.DoidConstants
+import com.hartwig.actin.doid.DoidEvaluationFunctions
 import com.hartwig.actin.doid.DoidModel
 import java.time.LocalDate
 
@@ -53,7 +54,7 @@ class HasKnownSclcTransformation(private val doidModel: DoidModel, private val m
 
             !isLungCancer -> EvaluationFactory.fail("No lung cancer thus no SCLC transformation")
 
-            else -> EvaluationFactory.recoverableFail("No indication of SCLC transformation in molecular or tumor type data")
+            else -> EvaluationFactory.fail("No indication of SCLC transformation in molecular or tumor type data")
         }
     }
 }

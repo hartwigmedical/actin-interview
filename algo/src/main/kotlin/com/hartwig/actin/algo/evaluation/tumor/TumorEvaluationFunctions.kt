@@ -1,8 +1,8 @@
 package com.hartwig.actin.algo.evaluation.tumor
 
-import com.hartwig.actin.algo.doid.DoidConstants
-import com.hartwig.actin.algo.evaluation.tumor.DoidEvaluationFunctions.isOfAtLeastOneDoidType
-import com.hartwig.actin.algo.evaluation.tumor.DoidEvaluationFunctions.isOfAtLeastOneDoidTerm
+import com.hartwig.actin.doid.DoidConstants
+import com.hartwig.actin.doid.DoidEvaluationFunctions.isOfAtLeastOneDoidType
+import com.hartwig.actin.doid.DoidEvaluationFunctions.isOfAtLeastOneDoidTerm
 import com.hartwig.actin.algo.evaluation.util.ValueComparison
 import com.hartwig.actin.datamodel.clinical.TumorDetails
 import com.hartwig.actin.datamodel.clinical.TumorStage
@@ -38,10 +38,6 @@ object TumorEvaluationFunctions {
 
     fun hasPeritonealMetastases(tumor: TumorDetails): Boolean? {
         return evaluatePeritonealMetastases(tumor.otherLesions)
-    }
-
-    fun hasSuspectedPeritonealMetastases(tumor: TumorDetails): Boolean? {
-        return evaluatePeritonealMetastases(tumor.otherSuspectedLesions)
     }
 
     fun isStageMatch(stage: TumorStage, stagesToMatch: Set<TumorStage>): Boolean {

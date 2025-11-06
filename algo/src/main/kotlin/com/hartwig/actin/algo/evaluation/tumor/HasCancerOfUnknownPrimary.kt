@@ -1,12 +1,34 @@
 package com.hartwig.actin.algo.evaluation.tumor
 
-import com.hartwig.actin.algo.doid.DoidConstants
 import com.hartwig.actin.algo.evaluation.EvaluationFactory
 import com.hartwig.actin.algo.evaluation.EvaluationFunction
 import com.hartwig.actin.datamodel.PatientRecord
-import com.hartwig.actin.datamodel.algo.Evaluation
+import com.hartwig.actin.algo.evaluation.Evaluation
+import com.hartwig.actin.datamodel.Displayable
+import com.hartwig.actin.doid.DoidConstants
+import com.hartwig.actin.doid.DoidEvaluationFunctions
 import com.hartwig.actin.doid.DoidModel
-import com.hartwig.actin.trial.input.datamodel.TumorTypeInput
+
+enum class TumorTypeInput(private val doid: String) : Displayable {
+    CARCINOMA("305"),
+    ADENOCARCINOMA("299"),
+    SQUAMOUS_CELL_CARCINOMA("1749"),
+    MELANOMA("1909");
+
+    fun doid(): String {
+        return doid
+    }
+
+    override fun display(): String {
+        return this.toString().replace("_", " ").lowercase()
+    }
+
+    companion object {
+        fun fromString(string: String): TumorTypeInput {
+            return valueOf(string.trim { it <= ' ' }.replace(" ".toRegex(), "_").uppercase())
+        }
+    }
+}
 
 class HasCancerOfUnknownPrimary(private val doidModel: DoidModel, private val tumorType: TumorTypeInput) : EvaluationFunction {
 

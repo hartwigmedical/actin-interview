@@ -16,4 +16,14 @@ data class TumorDetails(
     val hasLymphNodeLesions: Boolean? = null,
     val otherLesions: List<String>? = null,
     val biopsyLocation: String? = null
-)
+) {
+
+    companion object {
+        const val BONE = "Bone"
+        const val LIVER = "Liver"
+        const val LUNG = "Lung"
+        const val LYMPH_NODE = "Lymph node"
+        const val CNS = "CNS"
+        const val BRAIN = "Brain"
+    }
+}

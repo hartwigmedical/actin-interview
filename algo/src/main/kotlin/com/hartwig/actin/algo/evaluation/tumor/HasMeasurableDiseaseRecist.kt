@@ -1,17 +1,18 @@
 package com.hartwig.actin.algo.evaluation.tumor
 
-import com.hartwig.actin.algo.doid.DoidConstants
+import com.hartwig.actin.doid.DoidConstants
 import com.hartwig.actin.algo.evaluation.EvaluationFactory
 import com.hartwig.actin.algo.evaluation.EvaluationFunction
 import com.hartwig.actin.datamodel.PatientRecord
-import com.hartwig.actin.datamodel.algo.Evaluation
+import com.hartwig.actin.algo.evaluation.Evaluation
+import com.hartwig.actin.doid.DoidEvaluationFunctions
 import com.hartwig.actin.doid.DoidModel
 
 class HasMeasurableDiseaseRecist(private val doidModel: DoidModel) : EvaluationFunction {
 
     override fun evaluate(record: PatientRecord): Evaluation {
         val hasMeasurableDisease = record.tumor.hasMeasurableDisease
-            ?: return EvaluationFactory.recoverableUndetermined("Measurable disease by RECIST undetermined (data missing)")
+            ?: return EvaluationFactory.undetermined("Measurable disease by RECIST undetermined (data missing)")
 
         return if (hasMeasurableDisease && DoidEvaluationFunctions.isOfAtLeastOneDoidType(
                 doidModel,
@@ -21,9 +22,9 @@ class HasMeasurableDiseaseRecist(private val doidModel: DoidModel) : EvaluationF
         ) {
             EvaluationFactory.warn("Has measurable disease but with this tumor type unknown if by RECIST")
         } else if (hasMeasurableDisease) {
-            EvaluationFactory.recoverablePass("Has measurable disease")
+            EvaluationFactory.pass("Has measurable disease")
         } else {
-            EvaluationFactory.recoverableFail("Has no measurable disease")
+            EvaluationFactory.fail("Has no measurable disease")
         }
     }
 

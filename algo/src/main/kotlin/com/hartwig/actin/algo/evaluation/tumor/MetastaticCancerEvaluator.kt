@@ -1,8 +1,9 @@
 package com.hartwig.actin.algo.evaluation.tumor
 
-import com.hartwig.actin.algo.doid.DoidConstants
+import com.hartwig.actin.doid.DoidConstants
 import com.hartwig.actin.datamodel.PatientRecord
 import com.hartwig.actin.datamodel.clinical.TumorStage
+import com.hartwig.actin.doid.DoidEvaluationFunctions
 import com.hartwig.actin.doid.DoidModel
 
 enum class MetastaticCancerEvaluation {

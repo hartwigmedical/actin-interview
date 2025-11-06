@@ -1,6 +1,6 @@
 package com.hartwig.actin.algo.evaluation.tumor
 
-import com.hartwig.actin.algo.doid.DoidConstants
+import com.hartwig.actin.doid.DoidConstants
 import com.hartwig.actin.algo.evaluation.EvaluationAssert
 import com.hartwig.actin.algo.evaluation.EvaluationResult
 import com.hartwig.actin.datamodel.clinical.TumorDetails
@@ -59,7 +59,7 @@ class HasLesionsCloseToOrInvolvingAirwayTest {
     fun `Should warn if patient has suspected lung lesions`() {
         EvaluationAssert.assertEvaluation(
             EvaluationResult.WARN,
-            function.evaluate(TumorTestFactory.withLungLesions(false, true))
+            function.evaluate(TumorTestFactory.withLungLesions(false))
         )
     }
 }

@@ -31,8 +31,7 @@ class HasKnownActiveBrainMetastasesTest {
             function.evaluate(
                 TumorTestFactory.withBrainLesionStatus(
                     hasBrainLesions = false,
-                    hasActiveBrainLesions = null,
-                    hasSuspectedBrainLesions = true
+                    hasActiveBrainLesions = null
                 )
             )
         )

@@ -71,9 +71,7 @@ class HasKnownCnsMetastasesTest {
             function.evaluate(
                 TumorTestFactory.withBrainAndCnsLesions(
                     hasBrainLesions = false,
-                    hasCnsLesions = false,
-                    hasSuspectedBrainLesions = true,
-                    hasSuspectedCnsLesions = false
+                    hasCnsLesions = false
                 )
             )
         )
@@ -86,9 +84,7 @@ class HasKnownCnsMetastasesTest {
             function.evaluate(
                 TumorTestFactory.withBrainAndCnsLesions(
                     hasBrainLesions = false,
-                    hasCnsLesions = false,
-                    hasSuspectedBrainLesions = false,
-                    hasSuspectedCnsLesions = true
+                    hasCnsLesions = false
                 )
             )
         )

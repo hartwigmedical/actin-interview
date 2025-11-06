@@ -3,7 +3,7 @@ package com.hartwig.actin.algo.evaluation.tumor
 import com.hartwig.actin.algo.evaluation.EvaluationFactory
 import com.hartwig.actin.algo.evaluation.EvaluationFunction
 import com.hartwig.actin.datamodel.PatientRecord
-import com.hartwig.actin.datamodel.algo.Evaluation
+import com.hartwig.actin.algo.evaluation.Evaluation
 
 class MeetsSpecificCriteriaRegardingBrainMetastases : EvaluationFunction {
 
@@ -22,16 +22,8 @@ class MeetsSpecificCriteriaRegardingBrainMetastases : EvaluationFunction {
                     EvaluationFactory.undetermined("$messageStart brain metastases are met")
                 }
 
-                hasSuspectedBrainLesions == true -> {
-                    EvaluationFactory.undetermined("$messageStart suspected brain metastases are met")
-                }
-
                 unknownBrainLesions && hasCnsLesions == true -> {
                     EvaluationFactory.undetermined("$messageStart brain metastases are met")
-                }
-
-                unknownBrainLesions && hasSuspectedCnsLesions == true -> {
-                    EvaluationFactory.undetermined("$messageStart suspected brain metastases are met")
                 }
 
                 unknownBrainLesions -> {

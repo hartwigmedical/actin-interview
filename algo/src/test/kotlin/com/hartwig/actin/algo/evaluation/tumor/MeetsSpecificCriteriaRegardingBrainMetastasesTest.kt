@@ -26,13 +26,13 @@ class MeetsSpecificCriteriaRegardingBrainMetastasesTest {
 
     @Test
     fun `Should return undetermined in case of missing brain metastases data and having suspected CNS lesions`() {
-        val evaluation = FUNCTION.evaluate(TumorTestFactory.withBrainAndCnsLesions(null, false, false, true))
+        val evaluation = FUNCTION.evaluate(TumorTestFactory.withBrainAndCnsLesions(null, false))
         EvaluationAssert.assertEvaluation(EvaluationResult.UNDETERMINED, evaluation)
     }
 
     @Test
     fun `Should return undetermined in case of no brain metastases and having suspected brain lesions`() {
-        val evaluation = FUNCTION.evaluate(TumorTestFactory.withBrainAndCnsLesions(false, false, true, false))
+        val evaluation = FUNCTION.evaluate(TumorTestFactory.withBrainAndCnsLesions(false, false))
         EvaluationAssert.assertEvaluation(EvaluationResult.UNDETERMINED, evaluation)
     }
 

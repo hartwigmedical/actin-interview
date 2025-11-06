@@ -1,6 +1,6 @@
 package com.hartwig.actin.algo.evaluation.tumor
 
-import com.hartwig.actin.algo.doid.DoidConstants
+import com.hartwig.actin.doid.DoidConstants
 import com.hartwig.actin.algo.evaluation.tumor.MetastaticCancerEvaluator.STAGE_II_POTENTIALLY_METASTATIC_CANCER_DOIDS
 import com.hartwig.actin.datamodel.clinical.TumorStage
 import com.hartwig.actin.doid.TestDoidModelFactory

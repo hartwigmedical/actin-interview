@@ -43,8 +43,7 @@ class HasMinimumLesionsInSpecificBodyLocationTest {
             EvaluationResult.UNDETERMINED,
             functionRequiringOneLesionInEvaluableCategory.evaluate(
                 TumorTestFactory.withLungLesions(
-                    hasLungLesions = false,
-                    hasSuspectedLungLesions = true
+                    hasLungLesions = false
                 )
             )
         )
@@ -52,8 +51,7 @@ class HasMinimumLesionsInSpecificBodyLocationTest {
             EvaluationResult.UNDETERMINED,
             functionRequiringTwoLesionsInEvaluableCategory.evaluate(
                 TumorTestFactory.withLungLesions(
-                    hasLungLesions = false,
-                    hasSuspectedLungLesions = true
+                    hasLungLesions = false
                 )
             )
         )
@@ -85,8 +83,7 @@ class HasMinimumLesionsInSpecificBodyLocationTest {
             EvaluationResult.FAIL,
             functionRequiringOneLesionInEvaluableCategory.evaluate(
                 TumorTestFactory.withLungLesions(
-                    hasLungLesions = false,
-                    hasSuspectedLungLesions = false
+                    hasLungLesions = false
                 )
             )
         )
@@ -94,8 +91,7 @@ class HasMinimumLesionsInSpecificBodyLocationTest {
             EvaluationResult.FAIL,
             functionRequiringTwoLesionsInEvaluableCategory.evaluate(
                 TumorTestFactory.withLungLesions(
-                    hasLungLesions = false,
-                    hasSuspectedLungLesions = false
+                    hasLungLesions = false
                 )
             )
         )
@@ -106,13 +102,13 @@ class HasMinimumLesionsInSpecificBodyLocationTest {
         assertEvaluation(
             EvaluationResult.FAIL,
             functionRequiringOneLesionInEvaluableCategory.evaluate(
-                TumorTestFactory.withLungLesions(hasLungLesions = false, hasSuspectedLungLesions = null)
+                TumorTestFactory.withLungLesions(hasLungLesions = false)
             )
         )
         assertEvaluation(
             EvaluationResult.FAIL,
             functionRequiringTwoLesionsInEvaluableCategory.evaluate(
-                TumorTestFactory.withLungLesions(hasLungLesions = false, hasSuspectedLungLesions = null)
+                TumorTestFactory.withLungLesions(hasLungLesions = false)
             )
         )
     }

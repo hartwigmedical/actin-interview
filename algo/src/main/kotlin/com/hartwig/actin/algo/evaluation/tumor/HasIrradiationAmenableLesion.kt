@@ -3,8 +3,8 @@ package com.hartwig.actin.algo.evaluation.tumor
 import com.hartwig.actin.algo.evaluation.EvaluationFactory
 import com.hartwig.actin.algo.evaluation.EvaluationFunction
 import com.hartwig.actin.datamodel.PatientRecord
-import com.hartwig.actin.datamodel.algo.Evaluation
-import com.hartwig.actin.datamodel.algo.EvaluationResult
+import com.hartwig.actin.algo.evaluation.Evaluation
+import com.hartwig.actin.algo.evaluation.EvaluationResult
 
 class HasIrradiationAmenableLesion(private val hasMetastaticCancer: HasMetastaticCancer) : EvaluationFunction {
 
@@ -19,7 +19,7 @@ class HasIrradiationAmenableLesion(private val hasMetastaticCancer: HasMetastati
             }
 
             else -> {
-                EvaluationFactory.recoverableUndetermined("Irradiation amenable lesion undetermined")
+                EvaluationFactory.undetermined("Irradiation amenable lesion undetermined")
             }
         }
     }

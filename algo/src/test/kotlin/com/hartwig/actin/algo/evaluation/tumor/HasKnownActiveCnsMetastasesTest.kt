@@ -62,8 +62,7 @@ class HasKnownActiveCnsMetastasesTest {
                     hasBrainLesions = false,
                     hasActiveBrainLesions = null,
                     hasCnsLesions = null,
-                    hasActiveCnsLesions = null,
-                    hasSuspectedBrainLesions = true
+                    hasActiveCnsLesions = null
                 )
             )
         )
@@ -78,8 +77,7 @@ class HasKnownActiveCnsMetastasesTest {
                     hasBrainLesions = null,
                     hasActiveBrainLesions = null,
                     hasCnsLesions = false,
-                    hasActiveCnsLesions = null,
-                    hasSuspectedCnsLesions = true
+                    hasActiveCnsLesions = null
                 )
             )
         )

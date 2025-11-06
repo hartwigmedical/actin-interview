@@ -1,10 +1,9 @@
 package com.hartwig.actin.algo.evaluation.tumor
 
-import com.hartwig.actin.algo.doid.DoidConstants
 import com.hartwig.actin.algo.evaluation.EvaluationAssert.assertEvaluation
 import com.hartwig.actin.algo.evaluation.EvaluationResult
+import com.hartwig.actin.doid.DoidConstants
 import com.hartwig.actin.doid.TestDoidModelFactory
-import com.hartwig.actin.trial.input.datamodel.TumorTypeInput
 import org.junit.Test
 
 class HasCancerOfUnknownPrimaryTest {
