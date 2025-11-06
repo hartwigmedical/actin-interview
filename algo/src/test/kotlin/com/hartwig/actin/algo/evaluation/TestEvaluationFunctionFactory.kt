@@ -1,6 +1,5 @@
 package com.hartwig.actin.algo.evaluation
 
-import com.hartwig.actin.com.hartwig.actin.algo.evaluation.com.hartwig.actin.algo.evaluation.EvaluationTestFactory
 import com.hartwig.actin.datamodel.PatientRecord
 
 object TestEvaluationFunctionFactory {

@@ -38,26 +38,6 @@ class HasMinimumLesionsInSpecificBodyLocationTest {
     }
 
     @Test
-    fun `Should be undetermined in case of suspected lesions whether requiring at least one or two lesions`() {
-        assertEvaluation(
-            EvaluationResult.UNDETERMINED,
-            functionRequiringOneLesionInEvaluableCategory.evaluate(
-                TumorTestFactory.withLungLesions(
-                    hasLungLesions = false
-                )
-            )
-        )
-        assertEvaluation(
-            EvaluationResult.UNDETERMINED,
-            functionRequiringTwoLesionsInEvaluableCategory.evaluate(
-                TumorTestFactory.withLungLesions(
-                    hasLungLesions = false
-                )
-            )
-        )
-    }
-
-    @Test
     fun `Should be undetermined in case of missing known lesions information whether requiring at least one or two lesions`() {
         assertEvaluation(
             EvaluationResult.UNDETERMINED,

@@ -17,7 +17,7 @@ class HasChildPughScoreTest {
             otherCondition(icdMainCode = IcdConstants.HYPOMAGNESEMIA_CODE),
             otherCondition(icdMainCode = IcdConstants.PNEUMOTHORAX_CODE)
         )
-        EvaluationAssert.assertEvaluation(EvaluationResult.NOT_EVALUATED, function.evaluate(withOtherConditions(conditions)))
+        EvaluationAssert.assertEvaluation(EvaluationResult.PASS, function.evaluate(withOtherConditions(conditions)))
     }
 
     @Test

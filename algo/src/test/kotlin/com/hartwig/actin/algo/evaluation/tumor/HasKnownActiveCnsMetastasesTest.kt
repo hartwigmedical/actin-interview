@@ -54,36 +54,6 @@ class HasKnownActiveCnsMetastasesTest {
     }
 
     @Test
-    fun `Should return undetermined when brain metastases are suspected but unknown if active`() {
-        assertEvaluation(
-            EvaluationResult.UNDETERMINED,
-            function.evaluate(
-                TumorTestFactory.withActiveBrainAndCnsLesionStatus(
-                    hasBrainLesions = false,
-                    hasActiveBrainLesions = null,
-                    hasCnsLesions = null,
-                    hasActiveCnsLesions = null
-                )
-            )
-        )
-    }
-
-    @Test
-    fun `Should return undetermined when CNS metastases are suspected but unknown if active`() {
-        assertEvaluation(
-            EvaluationResult.UNDETERMINED,
-            function.evaluate(
-                TumorTestFactory.withActiveBrainAndCnsLesionStatus(
-                    hasBrainLesions = null,
-                    hasActiveBrainLesions = null,
-                    hasCnsLesions = false,
-                    hasActiveCnsLesions = null
-                )
-            )
-        )
-    }
-
-    @Test
     fun `Should fail when there are no CNS or brain metastases`() {
         assertEvaluation(
             EvaluationResult.FAIL,

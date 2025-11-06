@@ -1,5 +1,8 @@
 package com.hartwig.actin.datamodel
 
+import com.hartwig.actin.algo.evaluation.molecular.TestMolecularFactory
+import com.hartwig.actin.com.hartwig.actin.datamodel.clinical.TestClinicalFactory
+import com.hartwig.actin.datamodel.clinical.ClinicalRecord
 import com.hartwig.actin.datamodel.molecular.MolecularTest
 
 object TestPatientFactory {

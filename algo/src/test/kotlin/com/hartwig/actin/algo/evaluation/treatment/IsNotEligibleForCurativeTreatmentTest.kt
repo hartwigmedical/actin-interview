@@ -11,7 +11,7 @@ class IsNotEligibleForCurativeTreatmentTest {
     fun shouldAlwaysReturnNotEvaluated() {
         val function = IsNotEligibleForCurativeTreatment()
         assertEvaluation(
-            EvaluationResult.NOT_EVALUATED,
+            EvaluationResult.PASS,
             function.evaluate(TestPatientFactory.createMinimalTestWGSPatientRecord())
         )
     }

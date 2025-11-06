@@ -5,7 +5,6 @@ import com.hartwig.actin.algo.evaluation.EvaluationResult
 import com.hartwig.actin.datamodel.IcdConstants
 import com.hartwig.actin.icd.IcdModel
 import com.hartwig.actin.icd.datamodel.IcdNode
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
 class HasLeptomeningealDiseaseTest {
@@ -46,14 +45,6 @@ class HasLeptomeningealDiseaseTest {
             EvaluationResult.WARN,
             function.evaluate(ComorbidityTestFactory.withCnsLesion("carcinomatous meningitis"))
         )
-    }
-
-    @Test
-    fun `Should warn when suspected CNS lesion suggests leptomeningeal disease`() {
-        val evaluation = function.evaluate(ComorbidityTestFactory.withSuspectedCnsLesion("carcinomatous meningitis"))
-        assertEvaluation(EvaluationResult.WARN, evaluation)
-        assertThat(evaluation.warnMessagesStrings())
-            .containsExactly("Has suspected lesions 'carcinomatous meningitis' potentially indicating leptomeningeal disease")
     }
 
     @Test

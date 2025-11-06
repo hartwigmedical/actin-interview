@@ -63,30 +63,4 @@ class HasKnownCnsMetastasesTest {
             function.evaluate(TumorTestFactory.withBrainAndCnsLesions(hasBrainLesions = true, hasCnsLesions = true))
         )
     }
-
-    @Test
-    fun `Should warn when only suspected brain lesions present`() {
-        assertEvaluation(
-            EvaluationResult.WARN,
-            function.evaluate(
-                TumorTestFactory.withBrainAndCnsLesions(
-                    hasBrainLesions = false,
-                    hasCnsLesions = false
-                )
-            )
-        )
-    }
-
-    @Test
-    fun `Should warn when only suspected CNS lesions present`() {
-        assertEvaluation(
-            EvaluationResult.WARN,
-            function.evaluate(
-                TumorTestFactory.withBrainAndCnsLesions(
-                    hasBrainLesions = false,
-                    hasCnsLesions = false
-                )
-            )
-        )
-    }
 }

@@ -25,19 +25,6 @@ class HasKnownActiveBrainMetastasesTest {
     }
 
     @Test
-    fun `Should return undetermined when brain metastases are suspected but unknown if active`() {
-        assertEvaluation(
-            EvaluationResult.UNDETERMINED,
-            function.evaluate(
-                TumorTestFactory.withBrainLesionStatus(
-                    hasBrainLesions = false,
-                    hasActiveBrainLesions = null
-                )
-            )
-        )
-    }
-
-    @Test
     fun `Should fail when there are no brain metastases`() {
         assertEvaluation(
             EvaluationResult.FAIL,

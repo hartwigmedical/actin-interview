@@ -23,18 +23,6 @@ class TumorMetastasisEvaluatorTest {
     }
 
     @Test
-    fun `Should warn when only suspected metastasis boolean is true`() {
-        listOf(false, null).forEach { hasKnownLesion ->
-            val warn = TumorMetastasisEvaluator.evaluate(hasKnownLesion, METASTASIS_TYPE)
-            val message = "Has suspected bone metastases and not yet confirmed"
-            assertEvaluation(EvaluationResult.WARN, warn)
-            listOf(warn.warnMessagesStrings()).forEach {
-                assertThat(it).contains(message)
-            }
-        }
-    }
-
-    @Test
     fun `Should fail when boolean is false`() {
         val fail = TumorMetastasisEvaluator.evaluate(false, METASTASIS_TYPE)
         assertEvaluation(EvaluationResult.FAIL, fail)

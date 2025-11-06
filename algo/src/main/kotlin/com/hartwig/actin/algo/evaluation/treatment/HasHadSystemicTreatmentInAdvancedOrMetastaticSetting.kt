@@ -14,7 +14,7 @@ import java.time.YearMonth
 
 class HasHadSystemicTreatmentInAdvancedOrMetastaticSetting(private val referenceDate: LocalDate) : EvaluationFunction {
     override fun evaluate(record: PatientRecord): Evaluation {
-        val priorTreatments = record.oncologicalHistory.sortedBy { YearMonth.of(it.startYear ?: 0, it.startMonth ?: 0) }
+        val priorTreatments = record.oncologicalHistory.sortedBy { YearMonth.of(it.startYear ?: 1, it.startMonth ?: 1) }
         val priorSystemicTreatments = priorTreatments.filter { it.treatments.any(Treatment::isSystemic) }
         val (curativeTreatments, nonCurativeTreatments) = priorSystemicTreatments.partition { it.intents?.contains(Intent.CURATIVE) == true }
         val (recentNonCurativeTreatments, nonRecentNonCurativeTreatments) = partitionRecentTreatments(nonCurativeTreatments, false)

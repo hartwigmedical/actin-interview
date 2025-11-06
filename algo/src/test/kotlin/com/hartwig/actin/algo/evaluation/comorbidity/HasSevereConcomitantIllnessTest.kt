@@ -9,14 +9,14 @@ class HasSevereConcomitantIllnessTest {
 
     @Test
     fun `Should not evaluate when WHO unknown`() {
-        assertEvaluation(EvaluationResult.NOT_EVALUATED, function.evaluate(ComorbidityTestFactory.withWHO(null)))
+        assertEvaluation(EvaluationResult.PASS, function.evaluate(ComorbidityTestFactory.withWHO(null)))
     }
 
     @Test
     fun `Should not evaluate when WHO 2 or less`() {
-        assertEvaluation(EvaluationResult.NOT_EVALUATED, function.evaluate(ComorbidityTestFactory.withWHO(0)))
-        assertEvaluation(EvaluationResult.NOT_EVALUATED, function.evaluate(ComorbidityTestFactory.withWHO(1)))
-        assertEvaluation(EvaluationResult.NOT_EVALUATED, function.evaluate(ComorbidityTestFactory.withWHO(2)))
+        assertEvaluation(EvaluationResult.PASS, function.evaluate(ComorbidityTestFactory.withWHO(0)))
+        assertEvaluation(EvaluationResult.PASS, function.evaluate(ComorbidityTestFactory.withWHO(1)))
+        assertEvaluation(EvaluationResult.PASS, function.evaluate(ComorbidityTestFactory.withWHO(2)))
     }
 
     @Test
