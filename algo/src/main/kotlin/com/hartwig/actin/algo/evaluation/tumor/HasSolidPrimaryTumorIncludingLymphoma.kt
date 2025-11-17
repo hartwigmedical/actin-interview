@@ -1,0 +1,54 @@
+package com.hartwig.actin.algo.evaluation.tumor
+
+import com.hartwig.actin.doid.DoidConstants
+import com.hartwig.actin.algo.evaluation.EvaluationFactory
+import com.hartwig.actin.algo.evaluation.EvaluationFunction
+import com.hartwig.actin.datamodel.PatientRecord
+import com.hartwig.actin.algo.evaluation.Evaluation
+import com.hartwig.actin.algo.evaluation.EvaluationResult
+import com.hartwig.actin.doid.DoidEvaluationFunctions
+import com.hartwig.actin.doid.DoidModel
+
+class HasSolidPrimaryTumorIncludingLymphoma(private val doidModel: DoidModel) : EvaluationFunction {
+
+    override fun evaluate(record: PatientRecord): Evaluation {
+        val tumorDoids = record.tumor.doids
+        if (!DoidEvaluationFunctions.hasConfiguredDoids(tumorDoids)) {
+            return EvaluationFactory.undetermined("Solid primary tumor undetermined (tumor type missing)")
+        }
+        val result = DoidEvaluationFunctions.evaluateAllDoidsMatchWithFailAndWarns(
+            doidModel,
+            tumorDoids,
+            setOf(DoidConstants.CANCER_DOID, DoidConstants.BENIGN_NEOPLASM_DOID),
+            DoidConstants.NON_SOLID_CANCER_DOIDS,
+            WARN_SOLID_CANCER_DOIDS
+        )
+        return when (result) {
+            EvaluationResult.FAIL -> {
+                EvaluationFactory.fail("No solid primary tumor")
+            }
+
+            EvaluationResult.WARN -> {
+                EvaluationFactory.warn("Unclear if primary tumor is considered solid")
+            }
+
+            EvaluationResult.PASS -> {
+                EvaluationFactory.pass("Has solid primary tumor (including lymphoma)")
+            }
+
+            else -> {
+                Evaluation(result = result, recoverable = false)
+            }
+        }
+    }
+
+    companion object {
+        val WARN_SOLID_CANCER_DOIDS = setOf(
+            DoidConstants.CENTRAL_NERVOUS_SYSTEM_HEMATOLOGIC_CANCER_DOID,
+            DoidConstants.DENDRITIC_CELL_THYMOMA_DOID,
+            DoidConstants.HISTIOCYTIC_AND_DENDRITIC_CELL_CANCER_DOID,
+            DoidConstants.MAST_CELL_NEOPLASM_DOID,
+            DoidConstants.MYELOID_SARCOMA_DOID,
+        )
+    }
+}

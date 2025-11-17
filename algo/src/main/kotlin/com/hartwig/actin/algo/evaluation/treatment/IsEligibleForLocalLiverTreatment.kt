@@ -1,0 +1,36 @@
+package com.hartwig.actin.algo.evaluation.treatment
+
+import com.hartwig.actin.algo.evaluation.EvaluationFactory
+import com.hartwig.actin.algo.evaluation.EvaluationFunction
+import com.hartwig.actin.datamodel.PatientRecord
+import com.hartwig.actin.algo.evaluation.Evaluation
+import com.hartwig.actin.doid.DoidConstants
+import com.hartwig.actin.doid.DoidEvaluationFunctions
+import com.hartwig.actin.doid.DoidModel
+
+class IsEligibleForLocalLiverTreatment(private val doidModel: DoidModel) : EvaluationFunction {
+
+    override fun evaluate(record: PatientRecord): Evaluation {
+        val hasLiverLesions = record.tumor.hasLiverLesions
+        val expandedDoidSet = DoidEvaluationFunctions.createFullExpandedDoidTree(doidModel, record.tumor.doids)
+        val hasLiverCancer = DoidConstants.LIVER_CANCER_DOID in expandedDoidSet
+
+        return when {
+            hasLiverCancer && hasLiverLesions != true -> {
+                EvaluationFactory.undetermined("Has liver cancer but undetermined if eligible for local liver treatment")
+            }
+
+            hasLiverLesions == false -> {
+                EvaluationFactory.fail("No liver lesions hence no eligibility for local liver treatment")
+            }
+
+            hasLiverLesions == true -> {
+                EvaluationFactory.undetermined("Eligibility for local liver treatment undetermined")
+            }
+
+            else -> {
+                EvaluationFactory.undetermined("Liver lesions undetermined and therefore undetermined eligibility for local liver treatment")
+            }
+        }
+    }
+}

@@ -1,0 +1,64 @@
+package com.hartwig.actin.algo.evaluation.tumor
+
+import com.hartwig.actin.algo.evaluation.EvaluationFactory
+import com.hartwig.actin.algo.evaluation.EvaluationFunction
+import com.hartwig.actin.datamodel.PatientRecord
+import com.hartwig.actin.algo.evaluation.Evaluation
+import com.hartwig.actin.datamodel.Displayable
+import com.hartwig.actin.doid.DoidConstants
+import com.hartwig.actin.doid.DoidEvaluationFunctions
+import com.hartwig.actin.doid.DoidModel
+
+enum class TumorTypeInput(private val doid: String) : Displayable {
+    CARCINOMA("305"),
+    ADENOCARCINOMA("299"),
+    SQUAMOUS_CELL_CARCINOMA("1749"),
+    MELANOMA("1909");
+
+    fun doid(): String {
+        return doid
+    }
+
+    override fun display(): String {
+        return this.toString().replace("_", " ").lowercase()
+    }
+
+    companion object {
+        fun fromString(string: String): TumorTypeInput {
+            return valueOf(string.trim { it <= ' ' }.replace(" ".toRegex(), "_").uppercase())
+        }
+    }
+}
+
+class HasCancerOfUnknownPrimary(private val doidModel: DoidModel, private val tumorType: TumorTypeInput) : EvaluationFunction {
+
+    override fun evaluate(record: PatientRecord): Evaluation {
+        val tumorDoids = record.tumor.doids
+        if (!DoidEvaluationFunctions.hasConfiguredDoids(tumorDoids)) {
+            return EvaluationFactory.undetermined("Undetermined if patient has CUP")
+        }
+        val isCUP = TumorEvaluationFunctions.hasCancerOfUnknownPrimary(record.tumor.name)
+        val hasTargetTumorType = DoidEvaluationFunctions.isOfExclusiveDoidType(doidModel, tumorDoids, tumorType.doid())
+        val hasOrganSystemCancer = DoidEvaluationFunctions.isOfDoidType(doidModel, tumorDoids, DoidConstants.ORGAN_SYSTEM_CANCER_DOID)
+
+        return when {
+            hasTargetTumorType && !hasOrganSystemCancer -> {
+                if (isCUP) {
+                    EvaluationFactory.pass("Has cancer of unknown primary")
+                } else {
+                    EvaluationFactory.warn("Undetermined if tumor ${record.tumor.name} may be cancer of unknown primary")
+                }
+            }
+
+            DoidEvaluationFunctions.isOfExactDoid(tumorDoids, DoidConstants.CANCER_DOID) -> {
+                if (isCUP) {
+                    EvaluationFactory.undetermined("Has cancer of unknown primary but undetermined if ${tumorType.display()}")
+                } else {
+                    EvaluationFactory.undetermined("Undetermined if tumor ${record.tumor.name} may be cancer of unknown primary")
+                }
+            }
+
+            else -> EvaluationFactory.fail("Does not have cancer of unknown primary")
+        }
+    }
+}
